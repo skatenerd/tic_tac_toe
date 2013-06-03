@@ -3,7 +3,7 @@
 import unittest
 from tic_tac_toe import *
 
-class BoardInitTests(unittest.TestCase):    
+class BoardInitTests(unittest.TestCase):
 
     def test_if_new_board_is_empty_dict(self):
         self.assertEqual(dict(),Board().board_state)
@@ -25,7 +25,7 @@ class BoardIsFullTests(unittest.TestCase):
         game_board = Board()
         game_board.make_move(1,'x')
         self.assertEqual(False, game_board.is_full())
- 
+
     def test_is_full_on_full_game_board(self):
         game_board = Board()
         for i in range(1,10):
@@ -53,6 +53,31 @@ class BoardAvailableMovesTests(unittest.TestCase):
         available_moves = game_board.get_available_moves()
         self.assertEqual([], available_moves)
 
+class BoardPiecesMatchTests(unittest.TestCase):
+
+  def test_if_pieces_match_returns_true(self):
+      game_board = Board()
+      combo = [1,2,3]
+      game_board.make_move(1,'x')
+      game_board.make_move(2,'x')
+      game_board.make_move(3,'x')
+      self.assertEqual(True,game_board.pieces_match(combo))
+
+  def test_if_pieces_match_returns_false_with_full_combo(self):
+      game_board = Board()
+      combo = [1,2,3]
+      game_board.make_move(1,'x')
+      game_board.make_move(2,'x')
+      game_board.make_move(3,'o')
+      self.assertEqual(False,game_board.pieces_match(combo))
+
+  def test_if_pieces_match_returns_false_with_non_full_combo(self):
+      game_board = Board()
+      combo = [4,5,6]
+      game_board.make_move(4,'x')
+      game_board.make_move(5, 'x')
+      self.assertEqual(False,game_board.pieces_match(combo))
+
 class BoardWinnerTests(unittest.TestCase):
 
     def test_if_winner_returns_none_with_blank_board(self):
@@ -65,9 +90,12 @@ class BoardWinnerTests(unittest.TestCase):
 
     def test_if_winner_returns_token_with_win(self):
         game_board = Board()
+        game_board.make_move(1,'x')
+        game_board.make_move(2,'x')
+        game_board.make_move(3,'x')
         expected_winning_token = 'x'
         actual_winning_token = game_board.winner()
         self.assertEqual(expected_winning_token, actual_winning_token)
- 
+
 if __name__ == '__main__':
     unittest.main()
