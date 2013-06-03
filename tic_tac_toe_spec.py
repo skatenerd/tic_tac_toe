@@ -16,12 +16,6 @@ class BoardMakeMoveTests(unittest.TestCase):
         sample_board.make_move(1,'x')
         self.assertNotEqual(empty_board_state, sample_board.board_state)
 
-    def test_if_make_move_defends_against_occupied_spaces(self):
-        game_board = Board()
-        game_board.make_move(1,'x')
-        exception = Exception
-        #TODO
-
 class BoardIsFullTests(unittest.TestCase):
 
     def test_is_full_on_empty_board(self):
@@ -190,7 +184,7 @@ class AiGetBestMoveTests(unittest.TestCase):
       computer = AI('o')
       game = Board()
       neutral_score = 0
-      generated_score = computer.get_best_move(1,game,'o')
+      generated_score = computer.get_best_move_score(1,game,'o')
       self.assertEqual(neutral_score,generated_score)
 
 
@@ -201,7 +195,7 @@ class AiGetBestMoveTests(unittest.TestCase):
       game_board.make_move(2,'x')
       game_board.make_move(3,'x')
       bad_score = -1
-      generated_score = computer.get_best_move(4,game_board,'o')
+      generated_score = computer.get_best_move_score(4,game_board,'o')
       self.assertEqual(bad_score,generated_score)
 
     def test_if_returns_one_when_self_wins(self):
@@ -211,7 +205,7 @@ class AiGetBestMoveTests(unittest.TestCase):
       game_board.make_move(2,'o')
       game_board.make_move(3,'o')
       good_score = 1
-      generated_score = computer.get_best_move(4, game_board, 'o')
+      generated_score = computer.get_best_move_score(4, game_board, 'o')
       self.assertEqual(good_score,generated_score)
 
     def test_if_returns_one_when_self_wins_with_x_token(self):
@@ -221,9 +215,17 @@ class AiGetBestMoveTests(unittest.TestCase):
       game_board.make_move(2,'x')
       game_board.make_move(3,'x')
       good_score = 1
-      generated_score = computer.get_best_move(4, game_board, 'x')
+      generated_score = computer.get_best_move_score(4, game_board, 'x')
       self.assertEqual(good_score,generated_score)
 
+class AiGetBestMoveScore(unittest.TestCase):
+
+    def test_if_returns_space_one_at_game_beginning(self):
+      game_board = Board()
+      computer = AI('x')
+      expected_move = 1
+      actual_move = computer.get_best_move(game_board)
+      self.assertEqual(expected_move,actual_move)
 
 if __name__ == '__main__':
     unittest.main()
