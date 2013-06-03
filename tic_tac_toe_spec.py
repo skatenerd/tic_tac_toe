@@ -16,6 +16,12 @@ class BoardMakeMoveTests(unittest.TestCase):
         sample_board.make_move(1,'x')
         self.assertNotEqual(empty_board_state, sample_board.board_state)
 
+    def test_if_make_move_defends_against_occupied_spaces(self):
+        game_board = Board()
+        game_board.make_move(1,'x')
+        exception = Exception
+        #TODO
+
 class BoardIsFullTests(unittest.TestCase):
 
     def test_is_full_on_empty_board(self):
@@ -97,10 +103,6 @@ class BoardWinnerTests(unittest.TestCase):
         actual_winning_token = game_board.winner()
         self.assertEqual(expected_winning_token, actual_winning_token)
 
-    def test_if_winner_returns_none_with_empty_board(self):
-        game_board = Board()
-        self.assertEqual(None, game_board.winner())
-
     def test_winner_with_other_combo(self):
         game_board = Board()
         game_board.make_move(7,'o')
@@ -123,6 +125,32 @@ class BoardWinnerTests(unittest.TestCase):
         game_board.make_move(7,'x')
         self.assertEqual(None,game_board.winner())
 
+class BoardGameOverTests(unittest.TestCase):
+
+    def test_if_game_over_returns_false_when_game_not_over(self):
+        game_board = Board()
+        self.assertEqual(False, game_board.game_over())
+
+    def test_if_game_over_returns_true_when_board_is_full(self):
+        game_board = Board()
+        for i in range(1,10):
+            game_board.make_move(i,'x')
+        self.assertEqual(True,game_board.game_over())
+
+    def test_if_game_over_returns_true_when_there_is_winner(self):
+        game_board = Board()
+        for i in range(1,4):
+            game_board.make_move(i,'x')
+        self.assertEqual(True,game_board.game_over())
+
+class BoardEraseMoveTests(unittest.TestCase):
+
+    def test_if_reset_erases_move(self):
+        game_board = Board()
+        game_board.make_move(1,'x')
+        game_board.erase_move(1)
+        self.assertEqual({},game_board.board_state)
+
 class PlayerInitTests(unittest.TestCase):
 
   def test_if_init_function_sets_token(self):
@@ -135,23 +163,67 @@ class AiInitTests(unittest.TestCase):
       computer = AI('x')
       self.assertEqual('x',computer.token)
 
+    def test_if_init_function_sets_opp_token(self):
+      computer = AI('x')
+      self.assertEqual('o', computer.opponent_token)
+
+class AICostFunctionTests(unittest.TestCase):
+
+    def test_if_cost_function_returns_zero_with_no_winner(self):
+      computer = AI('o')
+      game_board = Board()
+      cost = computer.cost_function(game_board.winner())
+      self.assertEqual(0,cost)
+
+    def test_if_cost_function_returns_one_with_ai_winner(self):
+      computer = AI('o')
+      game_board = Board()
+      game_board.make_move(1,'o')
+      game_board.make_move(2, 'o')
+      game_board.make_move(3, 'o')
+      cost = computer.cost_function(game_board.winner())
+      self.assertEqual(1, cost)
+
 class AiGetBestMoveTests(unittest.TestCase):
 
-    def test_if_get_best_move_returns_five_on_second_turn(self):
+    def test_if_get_best_moves_returns_neg_one_first_turn(self):
       computer = AI('o')
-      game_board = Board()
-      human = Player('x')
-      game_board.make_move(1,human.token)
-      expected_move = 5
-      generated_move = computer.get_best_move(game_board.board_state)
-      self.assertEqual(expected_move, generated_move)
+      game = Board()
+      neutral_score = 0
+      generated_score = computer.get_best_move(1,game,'o')
+      self.assertEqual(neutral_score,generated_score)
 
-    def test_if_get_best_move_returns_one_on_first_turn(self):
+
+    def test_if_returns_neg_one_when_opp_wins(self):
       computer = AI('o')
       game_board = Board()
-      expected_move = 1
-      generated_move = computer.get_best_move(game_board.board_state)
-      self.assertEqual(expected_move, generated_move)
+      game_board.make_move(1,'x')
+      game_board.make_move(2,'x')
+      game_board.make_move(3,'x')
+      bad_score = -1
+      generated_score = computer.get_best_move(4,game_board,'o')
+      self.assertEqual(bad_score,generated_score)
+
+    def test_if_returns_one_when_self_wins(self):
+      computer = AI('o')
+      game_board = Board()
+      game_board.make_move(1,'o')
+      game_board.make_move(2,'o')
+      game_board.make_move(3,'o')
+      good_score = 1
+      generated_score = computer.get_best_move(4, game_board, 'o')
+      self.assertEqual(good_score,generated_score)
+
+    def test_if_returns_one_when_self_wins_with_x_token(self):
+      computer = AI('x')
+      game_board = Board()
+      game_board.make_move(1,'x')
+      game_board.make_move(2,'x')
+      game_board.make_move(3,'x')
+      good_score = 1
+      generated_score = computer.get_best_move(4, game_board, 'x')
+      self.assertEqual(good_score,generated_score)
+
 
 if __name__ == '__main__':
     unittest.main()
