@@ -97,5 +97,61 @@ class BoardWinnerTests(unittest.TestCase):
         actual_winning_token = game_board.winner()
         self.assertEqual(expected_winning_token, actual_winning_token)
 
+    def test_if_winner_returns_none_with_empty_board(self):
+        game_board = Board()
+        self.assertEqual(None, game_board.winner())
+
+    def test_winner_with_other_combo(self):
+        game_board = Board()
+        game_board.make_move(7,'o')
+        game_board.make_move(8, 'o')
+        game_board.make_move(9, 'o')
+        expected_winning_token = 'o'
+        actual_winning_token = game_board.winner()
+        self.assertEqual(expected_winning_token, actual_winning_token)
+
+    def test_if_winner_returns_none_with_full_board_no_win(self):
+        game_board = Board()
+        game_board.make_move(1,'x')
+        game_board.make_move(5,'o')
+        game_board.make_move(3,'x')
+        game_board.make_move(2,'o')
+        game_board.make_move(8,'x')
+        game_board.make_move(4,'o')
+        game_board.make_move(6,'x')
+        game_board.make_move(9,'o')
+        game_board.make_move(7,'x')
+        self.assertEqual(None,game_board.winner())
+
+class PlayerInitTests(unittest.TestCase):
+
+  def test_if_init_function_sets_token(self):
+    player = Player('o')
+    self.assertEqual(player.token,'o')
+
+class AiInitTests(unittest.TestCase):
+
+    def test_if_init_function_sets_token(self):
+      computer = AI('x')
+      self.assertEqual('x',computer.token)
+
+class AiGetBestMoveTests(unittest.TestCase):
+
+    def test_if_get_best_move_returns_five_on_second_turn(self):
+      computer = AI('o')
+      game_board = Board()
+      human = Player('x')
+      game_board.make_move(1,human.token)
+      expected_move = 5
+      generated_move = computer.get_best_move(game_board.board_state)
+      self.assertEqual(expected_move, generated_move)
+
+    def test_if_get_best_move_returns_one_on_first_turn(self):
+      computer = AI('o')
+      game_board = Board()
+      expected_move = 1
+      generated_move = computer.get_best_move(game_board.board_state)
+      self.assertEqual(expected_move, generated_move)
+
 if __name__ == '__main__':
     unittest.main()

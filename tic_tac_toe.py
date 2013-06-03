@@ -38,3 +38,17 @@ class Board(object):
             if self.pieces_match(combo):
                 return self.board_state[combo[0]]
         return None
+
+class Player(object):
+
+    def __init__(self,token):
+      self.token = token
+
+
+class AI(Player):
+
+  def __init__(self,token):
+      super(AI, self).__init__(token)
+
+  def get_best_move(self,current_board_state):
+      return 5
