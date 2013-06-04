@@ -1,7 +1,9 @@
 # Testing for Tic Tac Toe
 
 import unittest
-from tic_tac_toe import *
+from board import *
+from ai import *
+from player import *
 
 class BoardInitTests(unittest.TestCase):
 
@@ -203,9 +205,8 @@ class AiGetBestMoveScoreTests(unittest.TestCase):
       game_board = Board()
       game_board.make_move(1,'o')
       game_board.make_move(2,'o')
-      game_board.make_move(3,'o')
       good_score = 1
-      generated_score = computer.get_best_move_score(4, game_board, 'o')
+      generated_score = computer.get_best_move_score(3, game_board, 'o')
       self.assertEqual(good_score,generated_score)
 
     def test_if_returns_one_when_self_wins_with_x_token(self):
@@ -224,8 +225,10 @@ class AiGetBestMovesTests(unittest.TestCase):
       computer = AI('x')
       game_board = Board()
       game_board.make_move(1,'o')
+      game_board.make_move(5,'x')
       game_board.make_move(3,'o')
       self.assertEqual(2,computer.get_best_move(game_board))
+
 
 if __name__ == '__main__':
     unittest.main()
