@@ -121,6 +121,18 @@ class BoardWinnerTests(unittest.TestCase):
         game_board.make_move(7,'x')
         self.assertEqual(None,game_board.winner())
 
+    def test_that_winner_always_returns_str_or_none(self):
+        game_board = Board()
+        for i in range(1,4):
+            game_board.make_move(i,'x')
+        self.assertEqual(str,type(game_board.winner()))
+        for i in range(1,4):
+            game_board.make_move(i,'o')
+        self.assertEqual(str,type(game_board.winner()))
+        for i in range(1,4):
+            game_board.erase_move(i)
+        self.assertEqual(None,game_board.winner())
+
 class BoardGameOverTests(unittest.TestCase):
 
     def test_if_game_over_returns_false_when_game_not_over(self):
@@ -228,6 +240,28 @@ class AiGetBestMovesTests(unittest.TestCase):
       game_board.make_move(5,'x')
       game_board.make_move(3,'o')
       self.assertEqual(2,computer.get_best_move(game_board))
+
+    def test_if_ai_chooses_corner(self):
+      computer = AI('o')
+      game_board = Board()
+      actual_move = computer.get_best_move(game_board)
+      corners = (1,3,5,7,9)
+      self.assertTrue(actual_move in corners)
+
+    def test_if_ai_versus_ai_yields_tie(self):
+      computer_x = AI('x')
+      computer_o = AI('o')
+      game_board = Board()
+      game_over = False
+      while not game_over:
+        x_move = computer_x.get_best_move(game_board)
+        game_board.make_move(x_move,computer_x.token)
+        game_over = game_board.game_over()
+        o_move = computer_o.get_best_move(game_board)
+        game_board.make_move(o_move,computer_o.token)
+        game_over = game_board.game_over()
+      self.assertEqual(None,game_board.winner())
+
 
 
 if __name__ == '__main__':

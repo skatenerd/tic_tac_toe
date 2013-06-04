@@ -35,7 +35,7 @@ class Board(object):
     def winner(self):
         for combo in self.WINNING_COMBOS:
             if self.pieces_match(combo):
-                return self.board_state[combo[0]]
+                    return self.board_state[combo[0]]
         return None
 
     def game_over(self):
