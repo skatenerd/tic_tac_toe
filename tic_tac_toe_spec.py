@@ -178,7 +178,7 @@ class AICostFunctionTests(unittest.TestCase):
       cost = computer.cost_function(game_board.winner())
       self.assertEqual(1, cost)
 
-class AiGetBestMoveTests(unittest.TestCase):
+class AiGetBestMoveScoreTests(unittest.TestCase):
 
     def test_if_get_best_moves_returns_neg_one_first_turn(self):
       computer = AI('o')
@@ -218,14 +218,14 @@ class AiGetBestMoveTests(unittest.TestCase):
       generated_score = computer.get_best_move_score(4, game_board, 'x')
       self.assertEqual(good_score,generated_score)
 
-class AiGetBestMoveScore(unittest.TestCase):
+class AiGetBestMovesTests(unittest.TestCase):
 
-    def test_if_returns_space_one_at_game_beginning(self):
-      game_board = Board()
+    def test_if_ai_blocks_potential_win(self):
       computer = AI('x')
-      expected_move = 1
-      actual_move = computer.get_best_move(game_board)
-      self.assertEqual(expected_move,actual_move)
+      game_board = Board()
+      game_board.make_move(1,'o')
+      game_board.make_move(3,'o')
+      self.assertEqual(2,computer.get_best_move(game_board))
 
 if __name__ == '__main__':
     unittest.main()
