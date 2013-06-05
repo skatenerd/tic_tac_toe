@@ -4,4 +4,6 @@ class Player(object):
 
     def __init__(self,token):
       self.token = token
-      self.opponent_token = self.PLAYERS_DICT[token]
+      self.opponent_token = (self.PLAYERS_DICT[token])
+
+

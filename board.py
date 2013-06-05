@@ -7,8 +7,18 @@ class Board(object):
     def __init__(self):
         self.board_state = dict()
 
+    def __str__(self):
+        keys_present = self.board_state.keys()
+        keys_not_present = self.available_moves()
+        layout = dict()
+        for key in keys_present:
+            layout[str(key)] = self.board_state[key]
+        for key in keys_not_present:
+             layout[str(key)] = ""
+        return """\n%(1)3s|%(2)3s|%(3)3s\n------------\n%(4)3s|%(5)3s|%(6)3s\n------------\n%(7)3s|%(8)3s|%(9)3s""" % layout
+
     def make_move(self, space, token):
-        if space in self.get_available_moves():
+        if space in self.available_moves():
             self.board_state[space] = token
 
     def is_full(self):
@@ -17,7 +27,7 @@ class Board(object):
             return True
         return False
 
-    def get_available_moves(self):
+    def available_moves(self):
         spaces_taken = self.board_state.keys()
         move_list = range(1,10)
         available_moves = [move for move in move_list if move not in spaces_taken]
@@ -39,9 +49,7 @@ class Board(object):
         return None
 
     def game_over(self):
-        if self.is_full() or self.winner():
-            return True
-        return False
+        return (type(self.winner()) == str) or self.is_full()
 
     def erase_move(self,move):
         del self.board_state[move]

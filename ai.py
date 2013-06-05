@@ -1,37 +1,41 @@
 import player
 
 class AI(player.Player):
+  dictionary = {'x':'o','o':'x'}
 
   def __init__(self,token):
       super(AI, self).__init__(token)
 
-  def get_best_move(self,board_state):
+  def best_move(self,board):
       move_list = []
-      for move in board_state.get_available_moves():
-        move_score = self.get_best_move_score(move,board_state,self.token)
-        move_list.append((move_score,move))
-      move_list.sort()
-      return move_list[-1][1]
+      for move in board.available_moves():
+          move_score = self.best_move_score(move,board,self.token)
+          move_list.append((move_score,move))
+      if move_list:
+          move_list.sort()
+          return max(move_list)[-1]
 
   def cost_function(self, winner):
-      cost_dict = {self.token:1, self.opponent_token:-1, None:0}
+      cost_dict = {self.PLAYERS_DICT[self.token]:-1, self.token:1, None:0}
       return cost_dict[winner]
 
-  def get_best_move_score(self, space, current_board, current_player,depth=0):
+  def best_move_score(self, space, current_board, current_player):
       try:
         current_board.make_move(space,current_player)
-        possible_moves = current_board.get_available_moves()
+        possible_moves = current_board.available_moves()
         if current_board.game_over():
             return self.cost_function(current_board.winner())
         opposite_player = self.PLAYERS_DICT[current_player]
-        move_scores = [self.get_best_move_score(move,current_board,opposite_player, depth+1) for move in possible_moves]
+        move_scores = [self.best_move_score(move,current_board,opposite_player) for move in possible_moves]
         if self.comp_turn(current_player):
-            return min(move_scores)
+          return min(move_scores)
         else:
-            return max(move_scores)
+          return max(move_scores)
       finally:
         current_board.erase_move(space)
 
   def comp_turn(self, current_player):
        return current_player == self.token
+
+
 
