@@ -1,7 +1,6 @@
 import player
 
 class AI(player.Player):
-  dictionary = {'x':'o','o':'x'}
 
   def __init__(self,token):
       super(AI, self).__init__(token)
@@ -14,10 +13,6 @@ class AI(player.Player):
       if move_list:
           move_list.sort()
           return max(move_list)[-1]
-
-  def cost_function(self, winner):
-      cost_dict = {self.PLAYERS_DICT[self.token]:-1, self.token:1, None:0}
-      return cost_dict[winner]
 
   def best_move_score(self, space, current_board, current_player):
       try:
@@ -34,8 +29,14 @@ class AI(player.Player):
       finally:
         current_board.erase_move(space)
 
+
+  def cost_function(self, winner):
+      cost_dict = {self.opponent_token:-1, self.token:1, None:0}
+      return cost_dict[winner]
+
+
   def comp_turn(self, current_player):
-       return current_player == self.token
+      return current_player == self.token
 
 
 

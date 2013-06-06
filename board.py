@@ -8,6 +8,12 @@ class Board(object):
         self.board_state = dict()
 
     def __str__(self):
+        board_template = ("\n%(1)3s|%(2)3s|%(3)3s\n------------" +
+                          "\n%(4)3s|%(5)3s|%(6)3s\n------------" +
+                          "\n%(7)3s|%(8)3s|%(9)3s")
+        return board_template % self.generate_layout()
+
+    def generate_layout(self):
         keys_present = self.board_state.keys()
         keys_not_present = self.available_moves()
         layout = dict()
@@ -15,17 +21,23 @@ class Board(object):
             layout[str(key)] = self.board_state[key]
         for key in keys_not_present:
              layout[str(key)] = ""
-        return """\n%(1)3s|%(2)3s|%(3)3s\n------------\n%(4)3s|%(5)3s|%(6)3s\n------------\n%(7)3s|%(8)3s|%(9)3s""" % layout
+        return layout
 
     def make_move(self, space, token):
         if space in self.available_moves():
             self.board_state[space] = token
 
+    def game_over(self):
+        return bool(self.winner()) or self.is_full()
+
+    def winner(self):
+        for combo in self.WINNING_COMBOS:
+            if self.pieces_match(combo):
+                    return self.board_state[combo[0]]
+
     def is_full(self):
         occupied_spaces = self.board_state.keys()
-        if occupied_spaces == range(1,10):
-            return True
-        return False
+        return occupied_spaces == range(1,10)
 
     def available_moves(self):
         spaces_taken = self.board_state.keys()
@@ -41,15 +53,6 @@ class Board(object):
             third_piece = self.board_state[combo[2]]
             return first_piece == second_piece == third_piece
         return False
-
-    def winner(self):
-        for combo in self.WINNING_COMBOS:
-            if self.pieces_match(combo):
-                    return self.board_state[combo[0]]
-        return None
-
-    def game_over(self):
-        return (type(self.winner()) == str) or self.is_full()
 
     def erase_move(self,move):
         del self.board_state[move]
