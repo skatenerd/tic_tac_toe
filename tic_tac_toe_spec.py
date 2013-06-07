@@ -126,7 +126,6 @@ class BoardWinnerTests(unittest.TestCase):
             game_board.erase_move(i)
         self.assertEqual(None,game_board.winner())
 
-
 class BoardIsFullTests(unittest.TestCase):
 
     def test_is_full_on_empty_board(self):
@@ -189,8 +188,6 @@ class BoardPiecesMatchTests(unittest.TestCase):
       game_board.make_move(5, 'x')
       self.assertEqual(False,game_board.pieces_match(combo))
 
-
-
 class BoardEraseMoveTests(unittest.TestCase):
 
     def test_if_reset_erases_move(self):
@@ -241,7 +238,6 @@ class AiBestMovesTests(unittest.TestCase):
           computer_move = computer.best_move(game_board)
           self.assertEqual(9,computer_move)
 
-
     def test_if_ai_chooses_corner(self):
           computer = AI('o')
           game_board = Board()
@@ -254,8 +250,8 @@ class AiBestMovesTests(unittest.TestCase):
           computer_o = AI('o')
           game_board = Board()
           while not game_board.game_over():
-            game_board.make_move(computer_x.best_move(game_board),computer_x.token)
-            game_board.make_move(computer_o.best_move(game_board),computer_o.token)
+              game_board.make_move(computer_x.best_move(game_board),computer_x.token)
+              game_board.make_move(computer_o.best_move(game_board),computer_o.token)
           self.assertEqual(None,game_board.winner())
 
     def test_if_ai_chooses_winning_move_with_threat(self):
@@ -283,7 +279,6 @@ class AiBestMoveScoreTests(unittest.TestCase):
           neutral_score = 0
           generated_score = computer.best_score(1,game,'o')
           self.assertEqual(neutral_score,generated_score)
-
 
     def test_if_returns_neg_one_when_opp_wins(self):
           computer = AI('o')
