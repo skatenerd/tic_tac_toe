@@ -5,6 +5,7 @@ from board import *
 from ai import *
 from player import *
 from tic_tac_toe import *
+from game import *
 
 class BoardInitTests(unittest.TestCase):
 
@@ -257,23 +258,15 @@ class AiBestMovesTests(unittest.TestCase):
             game_board.make_move(computer_o.best_move(game_board),computer_o.token)
           self.assertEqual(None,game_board.winner())
 
-    def test_if_ai_chooses_winning_move_with_no_threat(self):
-          computer = AI('o')
-          game_board = Board()
-          game_board.make_move(1,'o')
-          game_board.make_move(2,'o')
-          computer_move = computer.best_move(game_board)
-          self.assertEqual(3,computer_move)
-
     def test_if_ai_chooses_winning_move_with_threat(self):
           computer = AI('o')
           game_board = Board()
           game_board.make_move(1,'o')
-          game_board.make_move(8,'x')
-          game_board.make_move(3,'o')
-          game_board.make_move(9,'x')
+          game_board.make_move(4,'x')
+          game_board.make_move(5,'x')
+          game_board.make_move(2,'o')
           computer_move = computer.best_move(game_board)
-          self.assertEqual(2,computer_move)
+          self.assertEqual(3,computer_move)
 
     def test_if_ai_stops_three_way_setup(self):
           computer = AI('o')
@@ -288,7 +281,7 @@ class AiBestMoveScoreTests(unittest.TestCase):
           computer = AI('o')
           game = Board()
           neutral_score = 0
-          generated_score = computer.best_move_score(1,game,'o')
+          generated_score = computer.best_score(1,game,'o')
           self.assertEqual(neutral_score,generated_score)
 
 
@@ -299,7 +292,7 @@ class AiBestMoveScoreTests(unittest.TestCase):
           game_board.make_move(2,'x')
           game_board.make_move(3,'x')
           bad_score = -1
-          generated_score = computer.best_move_score(4,game_board,'o')
+          generated_score = computer.best_score(4,game_board,'o')
           self.assertEqual(bad_score,generated_score)
 
     def test_if_returns_one_when_self_wins(self):
@@ -308,7 +301,7 @@ class AiBestMoveScoreTests(unittest.TestCase):
           game_board.make_move(1,'o')
           game_board.make_move(2,'o')
           good_score = 1
-          generated_score = computer.best_move_score(3, game_board, 'o')
+          generated_score = computer.best_score(3, game_board, 'o')
           self.assertEqual(good_score,generated_score)
 
     def test_if_returns_one_when_self_wins_with_x_token(self):
@@ -318,7 +311,7 @@ class AiBestMoveScoreTests(unittest.TestCase):
           game_board.make_move(2,'x')
           game_board.make_move(3,'x')
           good_score = 1
-          generated_score = computer.best_move_score(4, game_board, 'x')
+          generated_score = computer.best_score(4, game_board, 'x')
           self.assertEqual(good_score,generated_score)
 
 class AICostFunctionTests(unittest.TestCase):
