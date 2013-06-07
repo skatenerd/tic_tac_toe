@@ -20,16 +20,15 @@ class AI(player.Player):
           possible_moves = board.available_moves()
           if board.game_over():
               return self.cost_function(board.winner())
+          values = []
+          for move in possible_moves:
+              values.append(self.best_score(move,board,self.PLAYERS_DICT[player]))
+          if player == self.token:
+              return min(values)
           else:
-              values = []
-              for move in possible_moves:
-                  values.append(self.best_score(move,board,self.PLAYERS_DICT[player]))
-              if player == self.token:
-                  return min(values)
-              else:
-                  return max(values)
+              return max(values)
       finally:
-          board.erase_move(space)
+              board.erase_move(space)
 
   def cost_function(self, winner):
       cost_dict = {self.opponent_token:-1, self.token:1, None:0}
@@ -38,5 +37,10 @@ class AI(player.Player):
   def comp_turn(self, current_player):
       return current_player == self.token
 
-
-
+  def max_depth_reached(self, board):
+      new_board = board
+      for move in board.available_moves():
+          new_board.make_move(move,self.token)
+          if new_board.game_over():
+              return True
+      return False
