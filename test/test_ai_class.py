@@ -1,3 +1,10 @@
+import sys
+import unittest
+sys.path.append("../")
+from ai import *
+from board import *
+from player import *
+
 class AiInitTests(unittest.TestCase):
 
     def test_if_init_function_sets_token(self):

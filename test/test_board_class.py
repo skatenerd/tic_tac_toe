@@ -1,4 +1,9 @@
+import unittest
+import sys
+sys.path.append("../")
 from board import *
+from ai import *
+from player import *
 
 class BoardInitTests(unittest.TestCase):
 

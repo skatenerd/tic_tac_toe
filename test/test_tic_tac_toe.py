@@ -1,9 +1,9 @@
 # Testing for Tic Tac Toe
-
+import sys
 import unittest
+sys.path.append("../")
 from board import *
 from ai import *
-from player import *
 from tic_tac_toe import *
 from game import *
 
