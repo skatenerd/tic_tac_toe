@@ -5,6 +5,8 @@ principles laid out in Uncle Bob Martin's "Clean Code".
 
 Depenencies:
 nose
+
+
 To install:
 pip nose   or
 easy_install nose
