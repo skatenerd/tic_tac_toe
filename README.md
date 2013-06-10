@@ -1,8 +1,12 @@
 Tic Tac Toe written following the principles of 
 test-driven-development and some of the earlier
 principles laid out in Uncle Bob Martin's "Clean Code".
+
+
 Depenencies:
 nose
+
+
 To install:
 pip nose   or
 easy_install nose
