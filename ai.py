@@ -36,11 +36,3 @@ class AI(player.Player):
 
   def comp_turn(self, current_player):
       return current_player == self.token
-
-  def max_depth_reached(self, board):
-      new_board = board
-      for move in board.available_moves():
-          new_board.make_move(move,self.token)
-          if new_board.game_over():
-              return True
-      return False
