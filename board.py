@@ -13,6 +13,9 @@ class Board(object):
                           "\n%(7)3s|%(8)3s|%(9)3s")
         return board_template % self.generate_layout()
 
+    def state(self):
+        return self.board_state
+
     def generate_layout(self):
         keys_present = self.board_state.keys()
         keys_not_present = self.available_moves()
@@ -44,6 +47,7 @@ class Board(object):
         move_list = range(1,10)
         available_moves = [move for move in move_list if move not in spaces_taken]
         return available_moves
+
 
     def pieces_match(self,combo):
         occupied_spaces = self.board_state.keys()

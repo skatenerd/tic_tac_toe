@@ -15,7 +15,7 @@ class AiInitTests(unittest.TestCase):
           computer = AI('x')
           self.assertEqual('o', computer.opponent_token)
 
-class AiBestMovesTests(unittest.TestCase):
+class AiNextMoveTests(unittest.TestCase):
 
     def test_if_ai_blocks_potential_win(self):
           computer = AI('x')
@@ -23,7 +23,7 @@ class AiBestMovesTests(unittest.TestCase):
           game_board.make_move(1,'o')
           game_board.make_move(5,'x')
           game_board.make_move(3,'o')
-          computer_move = computer.best_move(game_board)
+          computer_move = computer.next_move(game_board)
           self.assertEqual(2,computer_move)
 
     def test_if_ai_blocks_diagonal_win(self):
@@ -32,14 +32,14 @@ class AiBestMovesTests(unittest.TestCase):
           game_board.make_move(1,'o')
           game_board.make_move(5,'o')
           game_board.make_move(3,'x')
-          computer_move = computer.best_move(game_board)
+          computer_move = computer.next_move(game_board)
           self.assertEqual(9,computer_move)
 
 
     def test_if_ai_chooses_corner(self):
           computer = AI('o')
           game_board = Board()
-          actual_move = computer.best_move(game_board)
+          actual_move = computer.next_move(game_board)
           corners = (1,3,5,7,9)
           self.assertTrue(actual_move in corners)
 
@@ -47,9 +47,11 @@ class AiBestMovesTests(unittest.TestCase):
           computer_x = AI('x')
           computer_o = AI('o')
           game_board = Board()
-          while not game_board.game_over():
-            game_board.make_move(computer_x.best_move(game_board),computer_x.token)
-            game_board.make_move(computer_o.best_move(game_board),computer_o.token)
+          for i in range(6):
+              x = computer_x.next_move(game_board)
+              game_board.make_move(x,computer_x.token)
+              o = computer_o.next_move(game_board)
+              game_board.make_move(o,computer_o.token)
           self.assertEqual(None,game_board.winner())
 
     def test_if_ai_chooses_winning_move_with_threat(self):
@@ -59,14 +61,14 @@ class AiBestMovesTests(unittest.TestCase):
           game_board.make_move(4,'x')
           game_board.make_move(5,'x')
           game_board.make_move(2,'o')
-          computer_move = computer.best_move(game_board)
+          computer_move = computer.next_move(game_board)
           self.assertEqual(3,computer_move)
 
     def test_if_ai_stops_three_way_setup(self):
           computer = AI('o')
           game_board = Board()
           game_board.make_move(1,'x')
-          computer_move = computer.best_move(game_board)
+          computer_move = computer.next_move(game_board)
           self.assertEqual(True,computer_move in (2,5))
 
 class AiBestMoveScoreTests(unittest.TestCase):

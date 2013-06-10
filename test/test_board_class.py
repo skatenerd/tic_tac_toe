@@ -24,6 +24,18 @@ class Board__Str__Tests(unittest.TestCase):
         game_board.make_move(1,'x')
         self.assertNotEqual(-1,game_board.__str__().find('x'))
 
+class BoardStateTests(unittest.TestCase):
+
+    def test_if_state_returns_empty_dict_with_no_moves(self):
+      board = Board()
+      self.assertEqual(dict(),board.state())
+
+    def test_if_state_returns_correct_mappings(self):
+      board = Board()
+      board.make_move(1,'x')
+      board.make_move(3,'o')
+      self.assertEqual({1:'x',3:'o'},board.state())
+
 class BoardMakeMoveTests(unittest.TestCase):
 
     def test_if_make_move_alters_board_state(self):
@@ -187,8 +199,6 @@ class BoardPiecesMatchTests(unittest.TestCase):
       game_board.make_move(5, 'x')
       self.assertEqual(False,game_board.pieces_match(combo))
 
-
-
 class BoardEraseMoveTests(unittest.TestCase):
 
     def test_if_reset_erases_move(self):
@@ -196,15 +206,3 @@ class BoardEraseMoveTests(unittest.TestCase):
         game_board.make_move(1,'x')
         game_board.erase_move(1)
         self.assertEqual({},game_board.board_state)
-
-class PlayerInitTests(unittest.TestCase):
-
-    def test_if_init_function_sets_token(self):
-        player = Player('o')
-        self.assertEqual(player.token,'o')
-
-    def test_if_init_function_set_opponent_token(self):
-        player = Player('o')
-        self.assertEqual('x',player.opponent_token)
-        player_two = Player('x')
-        self.assertEqual('o',player_two.opponent_token)
