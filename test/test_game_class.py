@@ -22,11 +22,6 @@ class GameRunTests(unittest.TestCase):
         game.run()
         self.assertEqual(True,game.over())
 
-    def test_that_sec_player_doesnt_move_if_game_over(self):
-        player_two = Player("o")
-        player_one = Player("x")
-        game = Game(player_one,player_two)
-
 class GameMoveTests(unittest.TestCase):
 
     def test_that_move_alters_state(self):
@@ -41,5 +36,4 @@ class GameMoveTests(unittest.TestCase):
                          p_two_move:player_two.token}
         actual_state = game.gameboard.state()
         self.assertEqual(expected_state,actual_state)
-
 

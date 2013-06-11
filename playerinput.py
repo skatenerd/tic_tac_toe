@@ -6,7 +6,6 @@ class FakePlayerInput(object):
         int_list = board.available_moves()
         return random.choice(int_list)
 
-
 class PlayerInput(object):
 
     def output(self,board):
