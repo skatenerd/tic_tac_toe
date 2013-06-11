@@ -1,17 +1,18 @@
-import random
-
-class FakePlayerInput(object):
-
-    def output(self,board):
-        int_list = board.available_moves()
-        return random.choice(int_list)
-
 class PlayerInput(object):
 
-    def output(self,board):
-        available_moves = board.available_moves()
-        space = 0
-        while space not in available_moves:
-            print available_moves
-            space = int(raw_input("Where would you like to move: "))
-        return space
+    def output(self):
+        return raw_input()
+
+class InputValidator(object):
+
+    def __init__(self,input_source):
+        self.input_source = input_source
+
+    def validate(self,valid_responses,data_type=int):
+        user_input = None
+        while user_input not in valid_responses:
+            try:
+                user_input = data_type(self.input_source.output())
+            except:
+                continue
+        return user_input
