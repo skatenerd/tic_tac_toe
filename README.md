@@ -3,7 +3,7 @@ test-driven-development and some of the earlier
 principles laid out in Uncle Bob Martin's "Clean Code".
 
 
-Depenencies:
+Dependencies:
 nose:
   nose-plugins: (optional) nose-exclude, yanc
 
@@ -14,7 +14,7 @@ pip nose
 or
 easy_install nose
 
-To install nose dependencies:
+To install optional nose dependencies:
 
 
 easy_install nose-exclude
