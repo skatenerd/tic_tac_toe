@@ -35,7 +35,7 @@ class Board(object):
 
     def winner(self):
         for combo in self.WINNING_COMBOS:
-            if self.pieces_match(combo):
+            if self.__pieces_match(combo):
                     return self.board_state[combo[0]]
 
     def is_full(self):
@@ -49,7 +49,7 @@ class Board(object):
         return available_moves
 
 
-    def pieces_match(self,combo):
+    def __pieces_match(self,combo):
         occupied_spaces = self.board_state.keys()
         if combo[0] in occupied_spaces and combo[1] in occupied_spaces and combo[2] in occupied_spaces:
             first_piece = self.board_state[combo[0]]

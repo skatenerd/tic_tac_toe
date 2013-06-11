@@ -4,7 +4,7 @@ sys.path.append("../")
 from game import *
 from board import *
 import sys
-from playerinput import FakePlayerInput
+from test_utils import FakePlayerInput
 from player import Player
 
 class GameRunTests(unittest.TestCase):

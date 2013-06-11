@@ -174,31 +174,6 @@ class BoardAvailableMovesTests(unittest.TestCase):
         available_moves = game_board.available_moves()
         self.assertEqual([], available_moves)
 
-class BoardPiecesMatchTests(unittest.TestCase):
-
-  def test_if_pieces_match_returns_true(self):
-      game_board = Board()
-      combo = [1,2,3]
-      game_board.make_move(1,'x')
-      game_board.make_move(2,'x')
-      game_board.make_move(3,'x')
-      self.assertEqual(True,game_board.pieces_match(combo))
-
-  def test_if_pieces_match_returns_false_with_full_combo(self):
-      game_board = Board()
-      combo = [1,2,3]
-      game_board.make_move(1,'x')
-      game_board.make_move(2,'x')
-      game_board.make_move(3,'o')
-      self.assertEqual(False,game_board.pieces_match(combo))
-
-  def test_if_pieces_match_returns_false_with_non_full_combo(self):
-      game_board = Board()
-      combo = [4,5,6]
-      game_board.make_move(4,'x')
-      game_board.make_move(5, 'x')
-      self.assertEqual(False,game_board.pieces_match(combo))
-
 class BoardEraseMoveTests(unittest.TestCase):
 
     def test_if_reset_erases_move(self):

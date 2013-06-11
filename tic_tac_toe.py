@@ -19,3 +19,6 @@ if __name__ == "__main__":
         print game.gameboard.winner() + " wins!"
     else:
         print "It's a tie!"
+
+def capture_input(values,data_type):
+    return data_type(values[0])
