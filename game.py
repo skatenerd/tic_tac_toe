@@ -11,17 +11,16 @@ class Game(object):
 
     def run(self):
         while not self.over():
-            player_one_move = self.player_one.next_move(self.gameboard)
-            self.move(player_one_move,self.player_one)
-            print self.gameboard
-            print self.player_one.token + " moves to " + str(player_one_move)
-            print "\n_______________"
+            self.turn(self.player_one)
             if not self.over():
-                player_two_move = self.player_two.next_move(self.gameboard)
-                self.move(player_two_move,self.player_two)
-                print self.player_two.token + " moves to " + str(player_two_move)
-            print "\n_______________"
-            print self.gameboard
+                self.turn(self.player_two)
+
+    def turn(self,player):
+        player_move = player.next_move(self.gameboard)
+        self.move(player_move,player)
+        print self.gameboard
+        print player.token + " moves to " + str(player_move)
+        print "\n_______________"
 
     def over(self):
         return self.gameboard.game_over()
