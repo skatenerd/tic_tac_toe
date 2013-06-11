@@ -1,29 +1,21 @@
+from __future__ import print_function
 from player import Player
 from board import Board
 from ai import AI
 
 class Game(object):
 
-    def __init__(self,player_one,player_two):
+    def __init__(self,player_one,player_two,display_method=print):
         self.gameboard = Board()
         self.player_one = player_one
         self.player_two = player_two
+        self.display_method = display_method
 
     def run(self):
-        while not self.over():
-            self.turn(self.player_one)
-            if not self.over():
-                self.turn(self.player_two)
+        self.display_method(self.gameboard)
 
-    def turn(self,player):
-        player_move = player.next_move(self.gameboard)
-        self.move(player_move,player)
-        print self.gameboard
-        print player.token + " moves to " + str(player_move)
-        print "\n_______________"
-
-    def over(self):
+    def __over__(self):
         return self.gameboard.game_over()
 
-    def move(self,space,player):
+    def __move__(self,space,player):
         self.gameboard.make_move(space,player.token)
