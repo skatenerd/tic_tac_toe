@@ -15,6 +15,8 @@ or
 easy_install nose
 
 To install nose dependencies:
+
+
 easy_install nose-exclude
 
 
