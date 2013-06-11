@@ -15,10 +15,10 @@ or
 easy_install nose
 
 To install nose dependencies:
-easy_install nose-exclude
+easy_install nose-exclude\n
 easy_install yanc
 
-Yanc is a colorizer
+Yanc is a colorizer\n
 Nose Exclude enables the option to exclude certain directories - Usage: nosetests --exclude-dir=exclude/me
 
 To run the test suite, enter the root of the
