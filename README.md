@@ -3,7 +3,7 @@ test-driven-development and some of the earlier
 principles laid out in Uncle Bob Martin's "Clean Code".
 
 
-Depenencies:
+Dependencies:
 nose:
   nose-plugins: (optional) nose-exclude, yanc
 
@@ -14,11 +14,17 @@ pip nose
 or
 easy_install nose
 
-To install nose dependencies:
+To install optional nose dependencies:
+
+
 easy_install nose-exclude
+
+
 easy_install yanc
 
 Yanc is a colorizer
+
+
 Nose Exclude enables the option to exclude certain directories - Usage: nosetests --exclude-dir=exclude/me
 
 To run the test suite, enter the root of the
