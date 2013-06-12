@@ -9,5 +9,5 @@ class Player(object):
         self.opponent_token = (self.PLAYERS_DICT[token])
         self.input_method = input_method
 
-    def next_move(self,board):
-        return self.input_method.output(board)
+    def next_move(self):
+        return self.input_method.output()

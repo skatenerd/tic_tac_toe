@@ -2,6 +2,7 @@ import game
 from player import Player
 from ai import AI
 from board import Board
+from playerinput import PlayerInput
 
 if __name__ == "__main__":
 
@@ -20,5 +21,3 @@ if __name__ == "__main__":
     else:
         print "It's a tie!"
 
-def capture_input(values,data_type):
-    return data_type(values[0])

@@ -1,26 +1,9 @@
 import sys
 sys.path.append("../")
-from test_utils import FakePlayerInput
+from test_utils import MockUserInput
 from board import Board
 import unittest
 from playerinput import InputValidator
-
-class PlayerInputTests(unittest.TestCase):
-
-  def test_fake_player_input_returns_move_in_available_moves(self):
-      board = Board()
-      board.make_move(1,'x')
-      fake_input = FakePlayerInput()
-      move = fake_input.output(board)
-      self.assertNotEqual(1,move)
-
-
-  def test_fake_player_knows_board_state(self):
-      board = Board()
-      fake_input = FakePlayerInput()
-      for i in range(1,10):
-          board.make_move(i,"x")
-      self.assertRaises(IndexError,fake_input.output, board)
 
 class InputValidatorTests(unittest.TestCase):
 
@@ -52,13 +35,3 @@ class InputValidatorTests(unittest.TestCase):
       input_source = MockUserInput(["c","d","b"])
       validator = InputValidator(input_source)
       self.assertEqual("b",validator.validate(valid_responses,str))
-
-class MockUserInput(object):
-
-  def __init__(self,vals):
-      self.data = list(vals)
-
-  def output(self):
-      return self.data.pop(0)
-
-
