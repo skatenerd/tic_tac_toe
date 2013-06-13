@@ -32,5 +32,8 @@ class FakePrinter(object):
         print item
 
     def last_print(self):
-        return self.history.pop()
-
+        try:
+            return self.history.pop()
+        except IndexError:
+            print "history must be populated."
+            return []
