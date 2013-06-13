@@ -1,3 +1,5 @@
+#file is misnamed?
+#also, did it feel natural to test-drive this class?
 import sys
 sys.path.append("../")
 from test_utils import MockUserInput

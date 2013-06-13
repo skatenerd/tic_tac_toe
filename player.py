@@ -10,4 +10,6 @@ class Player(object):
         self.input_method = input_method
 
     def next_move(self):
+      #input_method sounds like it's a method, but it's an object, right?
+      #it's interesting that the "input" has a method called "output"
         return self.input_method.output()

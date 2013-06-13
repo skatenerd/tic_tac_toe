@@ -15,6 +15,8 @@ class GameRunTests(unittest.TestCase):
         fake_player_two = MockPlayer("o",MockUserInput([4,5,6]))
         game = Game(fake_player_one,fake_player_two)
         game.run()
+        #it took me a minute to realize that "fake_player_one.input_method" refers to the mock input "MockUserInput([1,2,3])"
+        #you are talking about input_method when really you are desciribng a conversation between player and game.  try to make this more expressive
         self.assertTrue(fake_player_one.input_method.times_called >= 1)
 
     def test_that_player_two_moves(self):
@@ -37,13 +39,14 @@ class GameRunTests(unittest.TestCase):
 
     def test_that_board_is_printed_when_game_is_over(self):
         fake_player_one = MockPlayer("x",MockUserInput([1]))
-        fake_player_two = MockPlayer("o",MockUserInput([2])) 
+        fake_player_two = MockPlayer("o",MockUserInput([2]))
         fake_printer = FakePrinter()
         game = Game(fake_player_one,fake_player_two,display_method=fake_printer.print_this)
         for i in range(1,4):
             game.gameboard.make_move(i,"x")
         game.run()
         self.assertEqual(True,game.__over__())
+        #you're asserting that a string gets printed, but not what it is?
         self.assertEqual(str,type(fake_printer.last_print()))
 
     def test_that_second_player_doesnt_move_when_game_is_over(self):
@@ -62,6 +65,9 @@ class GameRunTests(unittest.TestCase):
         game.run()
         # Two sets of rounds plus final print
         self.assertEqual(3,len(fake_printer.history))
+        #why not pass in the fake_printer, instead of a method?
+        #it was unclear to me that there was a mock object, coupled to the "print_this" method,
+        #whose state changes with every call
 
 
 
@@ -78,6 +84,8 @@ class GameRoundTests(unittest.TestCase):
         self.assertEqual(0,fake_player.input_method.times_called)
 
     def test_that_round_set_calls_each_player(self):
+      #how are these tests different from the ones above?
+      #do you think that the run() tests provide a complete specification on their own?
         fake_player_one_input = MockUserInput([1])
         fake_player_two_input = MockUserInput([2])
         fake_player_one = MockPlayer("o",fake_player_one_input)
@@ -131,6 +139,7 @@ class GameSetupTests(unittest.TestCase):
         fake_printer = FakePrinter()
         game = Game(fake_player_one,fake_player_two,display_method=fake_printer.print_this)
         game.__setup__(MockUserInput([2]))
+        #can you find a way to be more specific about the contents?
         self.assertEqual(1,len(fake_printer.history))
 
     def test_that_setup_validates_input(self):
@@ -141,8 +150,9 @@ class GameSetupTests(unittest.TestCase):
         game.__setup__(MockUserInput(['a','b',2]))
         self.assertEqual(1,len(fake_printer.history))
         self.assertIsInstance(game.player_two,Player)
-        
 
+
+#some of the mocks live in test files and others live in test_utils.py.  it would be easier to find them if it was consistent.
 class FakePrinter(object):
 
     def __init__(self):

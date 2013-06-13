@@ -13,6 +13,8 @@ class AI(player.Player):
       if move_list:
           return max(move_list)[-1]
 
+  #can you find a way to do this without mutating the board?
+  #then you wouldn't have to worry about being Absolutely Sure that you "erase" the moves
   def __best_score(self, space, board, player, depth=0):
       try:
           board.make_move(space,player)

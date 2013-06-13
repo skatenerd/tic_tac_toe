@@ -1,3 +1,6 @@
+#the test files are redundantly named, they could be called:
+#board_test.py, game_test.py, etc.
+
 import unittest
 import sys
 sys.path.append("../")
@@ -22,6 +25,8 @@ class Board__Str__Tests(unittest.TestCase):
     def test_if_game_board_returns_correct_layout(self):
         game_board = Board()
         game_board.make_move(1,'x')
+        #this might be a little clearer if you used "count" or something,
+        #so I don't have to know what "-1" means
         self.assertNotEqual(-1,game_board.__str__().find('x'))
 
 class BoardStateTests(unittest.TestCase):
@@ -85,6 +90,8 @@ class BoardGameOverTests(unittest.TestCase):
 
 class BoardWinnerTests(unittest.TestCase):
 
+    #these tests could be a lot less verbose:
+    # def winner_returns_none_with_blank_board(), etc.
     def test_if_winner_returns_none_with_blank_board(self):
         self.assertEqual(None,Board().winner())
 
