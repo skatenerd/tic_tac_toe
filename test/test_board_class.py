@@ -22,7 +22,7 @@ class Board__Str__Tests(unittest.TestCase):
     def test_if_game_board_returns_correct_layout(self):
         game_board = Board()
         game_board.make_move(1,'x')
-        self.assertNotEqual(-1,game_board.__str__().find('x'))
+        self.assertEqual(1,game_board.__str__().count('x'))
 
 class BoardStateTests(unittest.TestCase):
 

@@ -1,18 +1,15 @@
 class PlayerInput(object):
 
-    def output(self):
+    def call(self):
         return raw_input()
 
 class InputValidator(object):
 
-    def __init__(self,input_source):
-        self.input_source = input_source
-
-    def validate(self,valid_responses,data_type=int):
-        user_input = None
-        while user_input not in valid_responses:
+    def validate(self,player,valid_responses,data_type=int):
+        response = None
+        while response not in valid_responses:
             try:
-                user_input = data_type(self.input_source.output())
+                response = data_type(player.next_move())
             except:
                 continue
-        return user_input
+        return response

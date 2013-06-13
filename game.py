@@ -6,11 +6,11 @@ from playerinput import InputValidator, PlayerInput
 
 class Game(object):
 
-    def __init__(self,player_one,player_two,display_method=print):
+    def __init__(self,player_one,player_two,display_method="python_print"):
         self.gameboard = Board()
         self.player_one = player_one
         self.player_two = player_two
-        self.display_method = display_method
+        self.display_method = display_method.print_this if not display_method == "python_print" else print
     
     def run(self):
         while not self.__over__():
@@ -18,17 +18,19 @@ class Game(object):
             self.__print_board_if_game_not_over__()
         self.display_method(self.gameboard)
 
-    def __setup__(self,input_source=PlayerInput()):
-        validator = InputValidator(input_source)
-        self.display_method("Would you like to go first or second (1,2): ")
-
     def __round_set__(self):
+        self.display_method("Please select a move: ")
         self.__round__(self.player_one)
         self.__round__(self.player_two)
 
     def __round__(self,current_player):
-        if not self.__over__():
-            self.__move__(current_player.next_move(),current_player)
+            if not self.__over__():
+                if not isinstance(current_player,AI):
+                    validator = InputValidator()
+                    move = validator.validate(current_player,self.gameboard.available_moves())
+                else:
+                    move = current_player.next_move(self.gameboard)
+                self.__move__(move,current_player)
 
     def __print_board_if_game_not_over__(self):
         if not self.__over__():

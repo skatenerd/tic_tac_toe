@@ -10,9 +10,8 @@ class MockUserInput(object):
         self.data = list(vals)
         self.times_called = 0
 
-    def output(self):
+    def call(self):
         self.__increment_times_called__()
-        print self.data
         return self.data.pop(0)
 
     def __increment_times_called__(self):
@@ -21,5 +20,17 @@ class MockUserInput(object):
 class MockPlayer(Player):
 
     def __init__(self,token,fake_input):
-        super(MockPlayer,self).__init__(token,input_method=fake_input)
+        super(MockPlayer,self).__init__(token,fake_input)
+
+class FakePrinter(object):
+
+    def __init__(self):
+        self.history = []
+
+    def print_this(self,item):
+        self.history.append(item.__str__())
+        print item
+
+    def last_print(self):
+        return self.history.pop()
 

@@ -8,28 +8,30 @@ class AI(player.Player):
   def next_move(self,board):
       move_list = []
       for move in board.available_moves():
-          move_score = self.__best_score(move,board,self.token)
+          move_score = self.__best_score__(move,board,self.token)
           move_list.append((move_score,move))
       if move_list:
           return max(move_list)[-1]
 
-  def __best_score(self, space, board, player, depth=0):
+  def __best_score__(self, space, board, player):
       try:
-          board.make_move(space,player)
-          possible_moves = board.available_moves()
-          if board.game_over() or depth == 5:
-              return self.__cost_function(board.winner())
-          values = [self.__best_score(move,board,self.PLAYERS_DICT[player],depth+1) for move in possible_moves]
-          if self.__comp_turn(player):
+          new_board = board
+          new_board.make_move(space,player)
+          possible_moves = new_board.available_moves()
+          if new_board.game_over():
+              return self.__cost_function__(new_board.winner())
+          next_player = self.PLAYERS_DICT[player]
+          values = [self.__best_score__(move,new_board,next_player) for move in possible_moves]
+          if self.__comp_turn__(player):
               return min(values)
           else:
               return max(values)
       finally:
-          board.erase_move(space)
+          new_board.erase_move(space)
 
-  def __cost_function(self, winner):
+  def __cost_function__(self, winner):
       cost_dict = {self.opponent_token:-1, self.token:1, None:0}
       return cost_dict[winner]
 
-  def __comp_turn(self, current_player):
+  def __comp_turn__(self, current_player):
       return current_player == self.token
