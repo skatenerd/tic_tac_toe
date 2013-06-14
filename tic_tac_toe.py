@@ -5,7 +5,7 @@ from ai import AI
 from playerinput import InputValidator
 
 if __name__ == "__main__":
-    game = game_setup()
+    game = Game(Player("x"),AI("o"))
     game.run()
 
 
