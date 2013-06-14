@@ -42,8 +42,3 @@ class AI(player.Player):
 
   def __comp_turn__(self, current_player):
       return current_player == self.token
-  
-  def __copy_board__(self,board):
-      new_board = Board()
-      new_board.board_state = board.board_state
-      return new_board
