@@ -4,6 +4,7 @@ sys.path.append("../")
 from ai import *
 from board import *
 from player import *
+from easy_ai import EasyAI
 
 class AiNextMoveTests(unittest.TestCase):
 
