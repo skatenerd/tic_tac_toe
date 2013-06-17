@@ -103,6 +103,16 @@ class GameRoundTests(unittest.TestCase):
         times_game_prompts_player_one = fake_player_one.input_object.times_called
         self.assertEqual(0,times_game_prompts_player_one)
 
+    def test_that_round_shows_available_moves(self):
+        fake_player_one = MockPlayer("x", MockUserInput([1,2,3]))
+        fake_player_two = MockPlayer("o",MockUserInput([4]))
+        fake_printer = FakePrinter()
+        game = Game(fake_player_one,fake_player_two,display_method=fake_printer)
+        game.__round__(fake_player_one)
+        expected_string = ("Available moves are ")
+        NOT_FOUND = -1
+        self.assertTrue(fake_printer.history[0].find(expected_string) != NOT_FOUND)
+
     def test_that_round_set_calls_each_player(self):
         fake_player_one_input = MockUserInput([1])
         fake_player_two_input = MockUserInput([2])
@@ -177,3 +187,10 @@ class GameMoveTests(unittest.TestCase):
                          p_two_move:player_two.token}
         actual_state = game.gameboard.state()
         self.assertEqual(expected_state,actual_state)
+
+    def test_that_move_works_with_easy_ai(self):
+        computer = EasyAI("o")
+        game = Game(Player("x"),computer)
+        game.__move__(computer.next_move(game.gameboard),computer)
+        empty_board = {}
+        self.assertTrue(game.gameboard.state() != empty_board)

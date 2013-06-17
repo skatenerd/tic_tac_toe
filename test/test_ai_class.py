@@ -71,4 +71,8 @@ class AiDifficultyTests(unittest.TestCase):
         for i in range(100):
             self.assertTrue(computer.next_move(board) != 3)
 
+    def test_easy_ai_has_token(self):
+        computer = EasyAI("o")
+        self.assertEqual("o",computer.token)
+
         

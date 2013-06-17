@@ -1,0 +1,57 @@
+from new_ai import AI
+from board import Board
+import unittest
+
+class MinimaxTests(unittest.TestCase):
+
+	def test_that_it_returns_one_for_a_win(self):
+		ai = AI("o")
+		current_player = ai.token
+		board = Board()
+		board.board_state[1] = "o"
+		board.board_state[2] = "o"
+		board.board_state[3] = "o"
+		self.assertEqual("o",board.winner())
+		self.assertEqual(1,ai.minimax(board,current_player))
+
+	def test_that_it_returns_neg_one_for_a_loss(self):
+		ai = AI("x")
+		current_player = ai.token
+		board = Board()
+		board.board_state[1] = "o"
+		board.board_state[2] = "o"
+		board.board_state[3] = "o"
+		self.assertTrue(board.game_over())
+		self.assertEqual("o",board.winner())
+		self.assertEqual(-1,ai.minimax(board,current_player))
+
+	def test_that_it_returns_zero_for_a_tie(self):
+		ai = AI("o")
+		board = Board()
+		board.board_state[1] = "x"
+		board.board_state[2] = "x"
+		board.board_state[3] = "o"
+		board.board_state[4] = "o"
+		board.board_state[5] = "o"
+		board.board_state[6] = "x"
+		board.board_state[7] = "x"
+		board.board_state[8] = "o"
+		board.board_state[9] = "x"
+		self.assertEqual(None, board.winner())
+		self.assertEqual(0,ai.minimax(board,current_player="o"))
+
+class EvaluateMove(unittest.TestCase):
+
+    def test_that_it_returns_zero_for_all_states_at_beginning(self):
+    	ai = AI("o")
+    	board = Board()
+    	for move in board.available_moves():
+    		self.assertEqual(0,ai.evaluate_move(move,board,"o"))
+
+    def test_that_it_returns_one_for_a_winning_move(self):
+    	ai = AI("o")
+    	board = Board()
+    	board.board_state[1] = "o"
+    	board.board_state[2] = "o"
+    	move = 3
+    	self.assertEqual(1,ai.evaluate_move(move,board,"o"))

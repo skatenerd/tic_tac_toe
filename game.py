@@ -2,7 +2,8 @@ from __future__ import print_function
 from player import Player
 from board import Board
 from ai import AI
-from playerinput import InputValidator, PlayerInput
+from easy_ai import EasyAI
+from playerinput import MoveValidator
 
 class Game(object):
 
@@ -39,7 +40,8 @@ class Game(object):
     def __round__(self,current_player):
             if not self.__over__():
                 if not isinstance(current_player,AI):
-                    validator = InputValidator()
+                    self.display_method("Available moves are " + str(self.gameboard.available_moves()))
+                    validator = MoveValidator()
                     move = validator.validate(current_player,self.gameboard.available_moves())
                 else:
                     move = current_player.next_move(self.gameboard)
