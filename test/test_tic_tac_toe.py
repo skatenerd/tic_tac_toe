@@ -16,15 +16,20 @@ class TicTacToeCreateGameTests(unittest.TestCase):
     	game = game_setup(mock,display_object=fake_printer)
     	self.assertEqual("Would you like to move first or second: ",fake_printer.history[0])
 
-    def test_that_game_setup_validates_input_before_accepting(self):
-    	mock = MockUserInput(["a",2])
-    	game = game_setup(mock)
-    	self.assertTrue(not isinstance(game.player_two,AI))
+    # def test_that_game_setup_validates_input_before_accepting(self):
+    # 	mock = MockUserInput(["a",2])
+    # 	game = game_setup(mock)
+    # 	self.assertTrue(not isinstance(game.player_two,AI))
 
     def test_that_game_setup_prompts_player_twice(self):
     	mock = MockUserInput([2])
     	fake_printer = FakePrinter()
-    	game = game_setup(mock,display_object=fake_printer)
+    	game_setup(mock,display_object=fake_printer)
     	self.assertEqual(2,len(fake_printer.history))
 
-         
+    def test_pick_token_returns_token(self):
+        mock = MockUserInput([2,"o"])
+        printer = FakePrinter().print_this
+        token = pick_token(mock,printer)
+        self.assertEqual("o",token)
+

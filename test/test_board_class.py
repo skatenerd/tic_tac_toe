@@ -14,8 +14,9 @@ class Board__Str__Tests(unittest.TestCase):
 
     def test_if_game_returns_no_pieces(self):
         game_board = Board()
-        self.assertEqual(-1,game_board.__str__().find('x'))
-        self.assertEqual(-1,game_board.__str__().find('o'))
+        NOT_FOUND = -1
+        self.assertEqual(NOT_FOUND,game_board.__str__().find('x'))
+        self.assertEqual(NOT_FOUND,game_board.__str__().find('o'))
         for num in range(1,10):
             self.assertEqual(-1,game_board.__str__().find(str(num)))
 

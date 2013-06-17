@@ -4,7 +4,7 @@ sys.path.append("../")
 from game import *
 from board import *
 import sys
-from test_utils import FakePrinter, MockUserInput, MockPlayer
+from test_utils import FakePrinter, MockUserInput, MockPlayer, ScriptedPlayer
 from player import Player
 from playerinput import InputValidator
 
@@ -51,7 +51,7 @@ class GameRunTests(unittest.TestCase):
         expected_string = ("\n%(1)3s|%(2)3s|%(3)3s\n------------" +
                            "\n%(4)3s|%(5)3s|%(6)3s\n------------" +
                            "\n%(7)3s|%(8)3s|%(9)3s") % game.gameboard.generate_layout()
-        self.assertEqual(expected_string,fake_printer.last_print())
+        self.assertTrue(expected_string in fake_printer.history)
 
     def test_that_second_player_doesnt_move_when_game_is_over(self):
         fake_player_one = MockPlayer("x",MockUserInput([1,2,3]))
@@ -69,8 +69,25 @@ class GameRunTests(unittest.TestCase):
         game = Game(fake_player_one,fake_player_two,display_method=fake_printer)
         game.run()
         # Two sets of rounds plus final print
-        self.assertEqual(6,len(fake_printer.history))
+        self.assertTrue(len(fake_printer.history) >= 6)
 
+    def test_that_game_displays_winner(self):
+        fake_player_one = MockPlayer("x",MockUserInput([1,2,3]))
+        fake_player_two = MockPlayer("o",MockUserInput([4,5]))
+        fake_printer = FakePrinter()
+        game = Game(fake_player_one,fake_player_two,display_method=fake_printer)
+        game.run()
+        self.assertEqual("x",game.gameboard.winner())
+        self.assertTrue("x wins" in fake_printer.history)
+
+    def test_that_game_prints_tie(self):
+        fake_player_one = (MockPlayer("x",MockUserInput([1,6,8,7,5])))
+        fake_player_two = (MockPlayer("o",MockUserInput([2,3,4,9])))
+        fake_printer = FakePrinter()
+        game = Game(fake_player_one,fake_player_two,display_method=fake_printer)
+        game.run()
+        self.assertEqual(None,game.gameboard.winner())
+        self.assertTrue("It's a tie." in fake_printer.history)
 
 
 class GameRoundTests(unittest.TestCase):
@@ -102,9 +119,10 @@ class GameRoundTests(unittest.TestCase):
         fake_player_one = MockPlayer("x",MockUserInput([1]))
         fake_player_two = MockPlayer("o",MockUserInput([2]))
         fake_printer = FakePrinter()
+        prompt = "Please select a move: "
         game = Game(fake_player_one,fake_player_two,fake_printer)
         game.__round_set__()
-        self.assertEqual(1,len(fake_printer.history))
+        self.assertTrue(prompt in fake_printer.history)
 
     def test_that_round_validates_user_input(self):
         fake_player_one = MockPlayer("x",MockUserInput(['a',2]))
@@ -112,6 +130,17 @@ class GameRoundTests(unittest.TestCase):
         game = Game(fake_player_one,fake_player_two)
         game.__round__(fake_player_one)
         self.assertEqual({2:"x"},game.gameboard.state())
+
+    def test_that_sample_board_shown(self):
+        fake_printer = FakePrinter()
+        fake_player_one = MockPlayer("x",MockUserInput([1,2,3]))
+        fake_player_two = MockPlayer("o",MockUserInput([4,5]))
+        game = Game(fake_player_one,fake_player_two,display_method=fake_printer)
+        game.run()
+        example_board = ("\n1|2|3\n-------" +
+                          "\n4|5|6\n-------" +
+                          "\n7|8|9\n")
+        self.assertTrue(example_board in fake_printer.history)
 
 class GamePrintBoardIfNotOverTests(unittest.TestCase):
 
@@ -130,7 +159,7 @@ class GamePrintBoardIfNotOverTests(unittest.TestCase):
         fake_player_two = MockPlayer("o",MockUserInput([4,5]))
         game = Game(fake_player_one,fake_player_two,display_method=fake_printer)
         game.run()
-        self.assertEqual(6,len(fake_printer.history))
+        self.assertTrue(len(fake_printer.history) >= 6)
 
 class GameMoveTests(unittest.TestCase):
 

@@ -13,10 +13,23 @@ class Game(object):
         self.display_method = display_method.print_this if not display_method == "python_print" else print
     
     def run(self):
+        self.__introduction__()
         while not self.__over__():
             self.__round_set__()
             self.__print_board_if_game_not_over__()
         self.display_method(self.gameboard)
+        self.__print_winner__()
+
+    def __print_winner__(self):
+        if self.gameboard.winner():
+            self.display_method(self.gameboard.winner() + " wins")
+        else:
+            self.display_method("It's a tie.")
+
+    def __introduction__(self):
+        self.display_method(("\n1|2|3\n-------" +
+                          "\n4|5|6\n-------" +
+                          "\n7|8|9\n"))
 
     def __round_set__(self):
         self.display_method("Please select a move: ")
