@@ -1,27 +1,24 @@
 from player import Player
+import random
 
 class AI(Player):
 
-  def __init__(self,token,difficulty="impossible"):
+  def __init__(self,token):
       super(AI, self).__init__(token)
-      self.difficulty = difficulty
 
   def next_move(self,board):
+      move_list = self.__build_move_list__(board)
+      if move_list:
+          best_move = max(move_list)[-1]
+          return best_move
+
+  def __build_move_list__(self,board):
       move_list = []
       possible_moves = board.available_moves()
       for move in possible_moves:
           move_score = self.__best_score__(move,board,self.token)
           move_list.append((move_score,move))
-      if move_list:
-          move = self.__select_move_based_on_difficulty__(move_list)
-          return move
-
-  def __select_move_based_on_difficulty__(self,move_list):
-      if self.difficulty == "impossible":
-          move = max(move_list)[-1]
-      elif self.difficulty == "easy":
-          move = min(move_list)[-1]
-      return move
+      return move_list
 
   def __best_score__(self, space, board, player, alpha=-1, beta=1):
       try:
@@ -51,3 +48,12 @@ class AI(Player):
 
   def __comp_turn__(self, current_player):
       return current_player == self.token
+
+
+class EasyAI(AI):
+
+    def next_move(self,board):
+        move_list = self.__build_move_list__(board)
+        easy_move_list = filter(lambda x: x[0] < 1, move_list)
+        move = random.choice(easy_move_list)
+        return move
