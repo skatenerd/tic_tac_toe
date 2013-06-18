@@ -11,3 +11,4 @@ class Player(object):
 
     def next_move(self,board=None):
         return self.input_object.call()
+
