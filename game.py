@@ -4,20 +4,20 @@ from board import Board
 from ai import AI
 from easy_ai import EasyAI
 from playerinput import MoveValidator
+from printer import Printer
 
 class Game(object):
 
-    def __init__(self,player_one,player_two,display_method="python_print"):
+    def __init__(self,player_one,player_two,display_object=Printer()):
         self.gameboard = Board()
         self.player_one = player_one
         self.player_two = player_two
-        self.display_method = display_method.print_this if not display_method == "python_print" else print
+        self.display_method = display_object.display
     
     def run(self):
         self.__introduction__()
         while not self.__over__():
             self.__round_set__()
-            self.__print_board_if_game_not_over__()
         self.display_method(self.gameboard)
         self.__print_winner__()
 
@@ -33,13 +33,14 @@ class Game(object):
                           "\n7|8|9\n"))
 
     def __round_set__(self):
-        self.display_method("Please select a move: ")
         self.__round__(self.player_one)
         self.__round__(self.player_two)
 
     def __round__(self,current_player):
             if not self.__over__():
                 if not isinstance(current_player,AI):
+                    self.display_method("Please select a move: ") 
+                    self.__print_board_if_game_not_over__() 
                     self.display_method("Available moves are " + str(self.gameboard.available_moves()))
                     validator = MoveValidator()
                     move = validator.validate(current_player,self.gameboard.available_moves())
