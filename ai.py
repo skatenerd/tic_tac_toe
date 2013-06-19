@@ -2,8 +2,8 @@ from player import Player
 
 class AI(Player):
 
-  def __init__(self,token):
-      super(AI, self).__init__(token)
+  def __init__(self,token,input_object=None):
+      super(AI, self).__init__(token,input_object)
       self.minimax_status = {"alpha":-1,"beta":1}
 
   def next_move(self,board):
