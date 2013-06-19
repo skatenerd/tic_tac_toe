@@ -38,7 +38,7 @@ class FakePrinter(object):
     def __init__(self):
         self.history = []
 
-    def print_this(self,item):
+    def display(self,item):
         self.history.append(item.__str__())
         print item
 

@@ -4,12 +4,13 @@ from player import Player
 from ai import AI
 from easy_ai import EasyAI
 from playerinput import InputValidator
+from printer import Printer
 
 class UserInterface(object):
 
-    def __init__(self,user_input,display_object="python_print"):
+    def __init__(self,user_input,display_object=Printer()):
         self.user_input = user_input
-        self.display_method = display_object.print_this if not display_object == "python_print" else print
+        self.display_method = display_object.display
         
     def game_setup(self):
         order = self.pick_order()
