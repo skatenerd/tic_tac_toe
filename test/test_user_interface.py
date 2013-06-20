@@ -2,6 +2,8 @@ import unittest
 from user_interface import *
 from test_utils import *
 from player import Player
+from ai import AI
+from easy_ai import EasyAI
 
 class UserInterfaceGameSetupTests(unittest.TestCase):
     
@@ -52,3 +54,17 @@ class UserInterfaceGameSetupTests(unittest.TestCase):
         self.assertTrue("o",game.player_two.token)
         self.assertTrue(isinstance(game.player_two,EasyAI))
 
+    def test_game_setup_prompts_scenario(self):
+        mock = MockUserInput(['2','o','impossible'])
+        fake_printer = FakePrinter() 
+        ui = UserInterface(mock,fake_printer)
+        prompt = ("Please choose a scenario: \n" +
+                 "(1) Human vs AI\n" +
+                 "(2) Human vs Human\n" +
+                 "(3) AI vs AI\n"
+                 "(4) Humanoid vs AI")
+        ui.pick_scenario()
+        history_string = " ".join(fake_printer.history) 
+        self.assertTrue(prompt in history_string)
+
+    

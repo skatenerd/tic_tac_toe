@@ -1,10 +1,8 @@
 from __future__ import print_function
 from game import Game
-from player import Player
-from ai import AI
-from easy_ai import EasyAI
 from playerinput import InputValidator
 from printer import Printer
+from human_vs_ai import HumanVsAiScenario
 
 class UserInterface(object):
 
@@ -17,10 +15,8 @@ class UserInterface(object):
         token = self.pick_token()
         opposite_token = {"o":"x","x":"o"}[token]
         difficulty = self.pick_difficulty()
-        ai = {"easy":EasyAI,"impossible":AI}[difficulty]
-        order_hash = {1:(Player(token),ai(opposite_token)),2:(ai(opposite_token),Player(token))}
-        player_one, player_two = order_hash[order]
-        return Game(player_one,player_two)
+	scenario = HumanVsAiScenario(token,opposite_token,order,difficulty)
+        return scenario.setup() 
 
     def pick_order(self):
         prompt = "Would you like to move first or second (1,2): "
@@ -36,7 +32,16 @@ class UserInterface(object):
         prompt = "Would like to play against an easy or impossible ai: "
         difficulty = self.__prompt_loop__(prompt,("easy","impossible"))
         return difficulty
-
+    
+    def pick_scenario(self):
+        prompt = ("Please choose a scenario: \n" +
+                  "(1) Human vs AI\n" +
+                  "(2) Human vs Human\n" +
+                  "(3) AI vs AI\n"
+                  "(4) Humanoid vs AI")
+        scenario = self.__prompt_loop__(prompt,(1,2,3,4))
+        return scenario
+ 
     def __prompt_loop__(self,prompt,valid_responses):
         self.display_method(prompt)
         validator = InputValidator()
