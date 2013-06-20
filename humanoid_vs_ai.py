@@ -1,8 +1,5 @@
-from scenario import Scenario
 from game import Game
 from humanoid import Humanoid
-from ai import AI
-from easy_ai import EasyAI
 from human_vs_ai import HumanVsAiScenario
 
 class HumanoidVsAiScenario(HumanVsAiScenario):
