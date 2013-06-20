@@ -12,6 +12,6 @@ class Humanoid(AI):
  
     def next_move(self,board):
         self.times_next_move_called += 1 
-        if self.times_next_move_called < 4:
+        if self.times_next_move_called < 3:
             return self.input_object.call() 
         return AI.next_move(self,board) 
