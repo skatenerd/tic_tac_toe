@@ -1,0 +1,5 @@
+
+class Printer(object):
+
+    def print_this(self,x):
+        print x
