@@ -2,7 +2,7 @@ from __future__ import print_function
 from game import Game
 from playerinput import InputValidator
 from printer import Printer
-from human_vs_ai import HumanVsAiScenario
+from scenario_selector import ScenarioSelector
 
 class UserInterface(object):
 
@@ -15,7 +15,8 @@ class UserInterface(object):
         token = self.pick_token()
         opposite_token = {"o":"x","x":"o"}[token]
         difficulty = self.pick_difficulty()
-	scenario = HumanVsAiScenario(token,opposite_token,order,difficulty)
+	scenario_selector = ScenarioSelector(token,opposite_token,order,difficulty)
+	scenario = scenario_selector.return_scenario(1)
         return scenario.setup() 
 
     def pick_order(self):
@@ -41,6 +42,12 @@ class UserInterface(object):
                   "(4) Humanoid vs AI")
         scenario = self.__prompt_loop__(prompt,(1,2,3,4))
         return scenario
+
+    def set_scenario(self, token, opposite_token, order, difficulty,scenario):
+	scenario_hash = {1:HumanVsAiScenario}
+	scenario_object = scenario_hash[scenario]
+	return scenario_object(token,opposite_token,order,difficulty)
+	
  
     def __prompt_loop__(self,prompt,valid_responses):
         self.display_method(prompt)
