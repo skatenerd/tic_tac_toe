@@ -3,7 +3,7 @@ from player import Player
 from board import Board
 from ai import AI
 from easy_ai import EasyAI
-from playerinput import MoveValidator
+from playerinput import InputValidator,MoveValidator
 from printer import Printer
 
 class Game(object):
@@ -13,6 +13,7 @@ class Game(object):
         self.player_one = player_one
         self.player_two = player_two
         self.display_method = display_object.display
+	self.current_player = player_one
     
     def run(self):
         self.__introduction__()
@@ -36,21 +37,29 @@ class Game(object):
         self.__round__(self.player_one)
         self.__round__(self.player_two)
 
-    def __round__(self,current_player):
+    def __round__(self,player):
             if not self.__over__():
-                if not isinstance(current_player,AI):
-                    self.display_method("Please select a move: ") 
-                    self.__print_board_if_game_not_over__() 
-                    self.display_method("Available moves are " + str(self.gameboard.available_moves()))
-                    validator = MoveValidator()
-                    move = validator.validate(current_player,self.gameboard.available_moves())
+		if not type(player) == AI:
+		    move = self.__non_ai_move__(player)
                 else:
-                    move = current_player.next_move(self.gameboard)
-                self.__move__(move,current_player)
+		    move = player.next_move(self.gameboard)
+                self.__move__(move,player)
+		self.display_method(player.token + " moves to " + str(move))
+		self.current_player = {self.player_one:self.player_two,
+				       self.player_two:self.player_one}[self.current_player]
+		self.__print_board_if_game_not_over__()
 
     def __print_board_if_game_not_over__(self):
         if not self.__over__():
             self.display_method(self.gameboard)
+
+    def __non_ai_move__(self,current_player):
+        self.display_method("Please select a move: ") 
+        self.__print_board_if_game_not_over__()
+	self.display_method("Available moves are " + str(self.gameboard.available_moves()))
+        validator = MoveValidator()
+        move = validator.validate(self.gameboard,current_player,self.gameboard.available_moves())
+        return move	
 
     def __over__(self):
         return self.gameboard.game_over()

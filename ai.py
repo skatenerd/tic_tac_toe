@@ -1,9 +1,12 @@
-from player import Player
+from player import Player 
 
 class AI(Player):
 
+  PLAYERS_DICT = {'x':'o','o':'x'}
+
   def __init__(self,token,input_object=None):
-      super(AI, self).__init__(token,input_object)
+      self.token = token
+      self.opponent_token = self.PLAYERS_DICT[self.token]
       self.minimax_status = {"alpha":-1,"beta":1}
 
   def next_move(self,board):

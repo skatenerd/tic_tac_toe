@@ -1,6 +1,4 @@
-import sys
 import unittest
-sys.path.append("../")
 from ai import *
 from board import *
 from player import *

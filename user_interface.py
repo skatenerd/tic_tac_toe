@@ -9,14 +9,15 @@ class UserInterface(object):
     def __init__(self,user_input,display_object=Printer()):
         self.user_input = user_input
         self.display_method = display_object.display
-        
+       
     def game_setup(self):
         order = self.pick_order()
         token = self.pick_token()
         opposite_token = {"o":"x","x":"o"}[token]
         difficulty = self.pick_difficulty()
+	scenario_number = self.pick_scenario()
 	scenario_selector = ScenarioSelector(token,opposite_token,order,difficulty)
-	scenario = scenario_selector.return_scenario(1)
+	scenario = scenario_selector.return_scenario(scenario_number)
         return scenario.setup() 
 
     def pick_order(self):
@@ -42,12 +43,6 @@ class UserInterface(object):
                   "(4) Humanoid vs AI")
         scenario = self.__prompt_loop__(prompt,(1,2,3,4))
         return scenario
-
-    def set_scenario(self, token, opposite_token, order, difficulty,scenario):
-	scenario_hash = {1:HumanVsAiScenario}
-	scenario_object = scenario_hash[scenario]
-	return scenario_object(token,opposite_token,order,difficulty)
-	
  
     def __prompt_loop__(self,prompt,valid_responses):
         self.display_method(prompt)
