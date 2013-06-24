@@ -3,7 +3,7 @@ from player import Player
 from board import Board
 from ai import AI
 from easy_ai import EasyAI
-from playerinput import InputValidator,MoveValidator
+from playerinput import MoveValidator
 from printer import Printer
 
 class Game(object):
