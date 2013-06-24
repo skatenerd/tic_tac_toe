@@ -1,22 +1,8 @@
 import unittest
-from scenario import Scenario
 from humanoid_vs_ai import HumanoidVsAiScenario
 from game import Game
 from humanoid import Humanoid
 from easy_ai import EasyAI
-
-class HumanoidVsAiScenarioInitTests(unittest.TestCase):
-
-    def test_that_it_sets_tokens_properly(self):
-        scenario = HumanoidVsAiScenario("x","o",1,"impossible")
-	self.assertEqual("x",scenario.player_one_token)
-	self.assertEqual("o",scenario.player_two_token)
-
-    def test_that_it_sets_order_and_difficulty(self):
-	scenario = HumanoidVsAiScenario("x","o",1,"impossible")
-	var_and_method_list = dir(scenario)
-	self.assertTrue("human_first" in var_and_method_list)
-	self.assertTrue("difficulty" in var_and_method_list)
 	
 class HumanoidVsAiScenarioSetupTests(unittest.TestCase):
     

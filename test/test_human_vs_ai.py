@@ -1,32 +1,17 @@
 import unittest
 from human_vs_ai import HumanVsAiScenario
-from scenario import Scenario
 from game import Game
 from ai import AI
 from easy_ai import EasyAI
 
-class HumanVsAiInitTests(unittest.TestCase):
+class HumanVsAiScenarioFlagsTests(unittest.TestCase):
 
-    def test_that_it_inherits_from_scenario(self):
+    def test_that_it_returns_appropriate_flags(self):
 	new_scenario = HumanVsAiScenario("x","o")
-	self.assertTrue(isinstance(new_scenario,Scenario))
-	self.assertEqual("x",new_scenario.player_one_token)
-	self.assertEqual("o",new_scenario.player_two_token)
-      
-    def test_that_it_has_human_first_var(self):
-	new_scenario = HumanVsAiScenario("x","o")
-	var_and_method_list = dir(new_scenario)
-	self.assertTrue("human_first" in var_and_method_list)
-
-    def test_that_it_has_ai_hash_var(self):
-	new_scenario = HumanVsAiScenario("x","o")
-	var_and_method_list = dir(new_scenario)
-	self.assertTrue("ai_hash" in var_and_method_list)
-
-    def test_that_it_has_difficulty_var(self):
-	new_scenario = HumanVsAiScenario("x","o")
-	var_and_method_list = dir(new_scenario)
-	self.assertTrue("difficulty" in var_and_method_list)
+	flags = new_scenario.flags()
+	self.assertTrue("token_flag" in flags)
+	self.assertTrue("difficulty_flag" in flags)
+	self.assertTrue("order_flag" in flags)
 
 class HumanVsAiSetupTests(unittest.TestCase):
 
@@ -45,16 +30,9 @@ class HumanVsAiSetupTests(unittest.TestCase):
 	game = new_scenario.setup()
 	self.assertTrue(not isinstance(game.player_one,AI))
 	self.assertTrue(isinstance(game.player_two,AI))
-        
-	new_scenario = HumanVsAiScenario("o","x")
-	new_scenario.human_first = False
-	game = new_scenario.setup()
-        self.assertTrue(isinstance(game.player_one,AI))
-	self.assertTrue(not isinstance(game.player_two,AI))
   
     def test_that_scenario_works_with_easy_ai(self):
-        new_scenario = HumanVsAiScenario("x","o")
-        new_scenario.difficulty = "easy"
+        new_scenario = HumanVsAiScenario("x","o",difficulty="easy")
 	new_scenario.human_first = True
 	game = new_scenario.setup()
 	self.assertTrue(isinstance(game.player_two,EasyAI))

@@ -5,14 +5,14 @@ class PlayerInput(object):
 
 class MoveValidator(object):
 
-    def validate(self,player,valid_responses,data_type=int):
+    def validate(self,board,player,valid_responses,data_type=int):
         response = None
-        while response not in valid_responses:
-            try:
-                response = data_type(player.next_move())
-            except:
-                continue
-        return response
+	while response not in valid_responses:
+	    try:
+	        response = data_type(player.next_move(board))
+	    except:
+		continue
+	return response
 
 class InputValidator(object):
 

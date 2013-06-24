@@ -8,6 +8,8 @@ class AI(Player):
       self.token = token
       self.opponent_token = self.PLAYERS_DICT[self.token]
       self.minimax_status = {"alpha":-1,"beta":1}
+      self.depth = 1
+      self.MAX_DEPTH = 2500 
 
   def next_move(self,board):
       move_list = self.__build_move_list__(board)
@@ -26,8 +28,8 @@ class AI(Player):
   def __best_score__(self, space, board, player):
       try:
           board.make_move(space,player)
-          if board.game_over():
-              return self.__cost_function__(board.winner())
+	  if board.game_over() or self.depth == self.MAX_DEPTH: 
+              return ((self.__cost_function__(board.winner()) * self.MAX_DEPTH) / self.depth)
           return self.__alpha_beta_prune__(board, player)
       finally:
           board.erase_move(space)
@@ -42,6 +44,7 @@ class AI(Player):
   def __return_beta__(self,board,next_player):
       beta = self.minimax_status["beta"] 
       alpha = self.minimax_status["alpha"]
+      self.depth += 1
       possible_moves = board.available_moves()
       for move in possible_moves:
           beta = min(beta, self.__best_score__(move,board,next_player))
@@ -52,6 +55,7 @@ class AI(Player):
   def __return_alpha__(self,board,next_player):
       alpha = self.minimax_status["alpha"]
       beta = self.minimax_status["beta"]
+      self.depth += 1
       possible_moves = board.available_moves()
       for move in possible_moves:
           alpha = max(alpha,self.__best_score__(move,board,next_player))

@@ -56,4 +56,11 @@ class AiNextMoveTests(unittest.TestCase):
         move = computer.next_move(board)
         self.assertTrue(move in (3,7))
 
-        
+    def test_ai_goes_for_fastest_win(self):
+	board = Board()
+	computer = AI("x")
+	board.make_move(1,"x")
+	board.make_move(2,"x")
+	move = computer.next_move(board)
+	self.assertEqual(3,move)
+
