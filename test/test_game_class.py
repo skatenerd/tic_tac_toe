@@ -103,19 +103,6 @@ class GameRunTests(unittest.TestCase):
 	game.run()
 	self.assertEqual("o",game.current_player.token)
 
-    def test_that_current_player_should_be_last_player(self):
-	input_one, input_two = self.create_fake_input_objects([1,2,3],[4,5,6])
-	player_one, player_two = self.create_fake_players(input_one,input_two)
-	game = Game(player_one,player_two)
-	game.run()
-#	self.assertEqual("x",game.current_player.token)
-
-	input_one, input_two = self.create_fake_input_objects([1,3,4],[7,8,9])
-	player_one, player_two = self.create_fake_players(input_one,input_two)
-	game = Game(player_one,player_two)
-	game.run()
-#	self.assertEqual("o",game.current_player.token)
-
 class GameRoundTests(unittest.TestCase):
 
     def test_that_round_doesnt_run_when_game_over(self):

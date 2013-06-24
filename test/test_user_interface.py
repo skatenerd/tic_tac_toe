@@ -14,25 +14,25 @@ class UserInterfaceGameSetupTests(unittest.TestCase):
         prompt_three = "Would you like to move first or second (1,2): "
 	return prompt_one,prompt_two,prompt_three,prompt_four
 
-#    def test_for_scenario_one_prompts(self):
-#	scenario = 1
-#	prompts = self.return_prompts()
-#	self.test_for_prompts(scenario,*prompts)
+    def test_for_scenario_one_prompts(self):
+	scenario = 1
+	prompts = self.return_prompts()
+	self.assert_prompts_present(scenario,*prompts)
 
-#    def test_scenario_four_prompts(self):
-#	scenario = 4
-#	prompts = self.return_prompts()
-#	self.test_for_prompts(scenario,*prompts)
+    def test_scenario_four_prompts(self):
+	scenario = 4
+	prompts = self.return_prompts()
+	self.assert_prompts_present(scenario,*prompts)
 
-#    def test_for_prompts(self,scenario_number,*prompts):
-#	dummy_input = [scenario_number,1,"x","easy"]
-#	mock = MockUserInput(dummy_input)
-#        fake_printer = FakePrinter()
-#	ui = UserInterface(mock,fake_printer)
-#	ui.game_setup()
-#	history_string = " ".join(fake_printer.history)
-#	for prompt in prompts:
-#	    self.assertTrue(prompt in history_string)
+    def assert_prompts_present(self,scenario_number,*prompts):
+	dummy_input = [scenario_number,1,"x","easy"]
+	mock = MockUserInput(dummy_input)
+        fake_printer = FakePrinter()
+	ui = UserInterface(mock,fake_printer)
+	ui.game_setup()
+	history_string = " ".join(fake_printer.history)
+	for prompt in prompts:
+	    self.assertTrue(prompt in history_string)
 
     def call_game_setup_with_input_list(self,input_list):
 	fake_printer = FakePrinter()
