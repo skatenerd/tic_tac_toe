@@ -39,6 +39,7 @@ class Game(object):
 
     def __round__(self,player):
             if not self.__over__():
+	        self.display_method(self.current_player.token.capitalize() + "'s turn")
 		if not type(player) == AI:
 		    move = self.__non_ai_move__(player)
                 else:

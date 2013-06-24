@@ -92,7 +92,10 @@ class GameRunTests(unittest.TestCase):
 	game = Game(fake_player_one,fake_player_two,display_object=fake_printer)
 	game.gameboard.board_state = {2:"x",3:"x"}
 	game.run()
-	self.assertTrue("x moves to 1" in fake_printer.history)
+	history_string = " ".join(fake_printer.history)
+	self.assertTrue("x moves to 1" in history_string)
+	self.assertTrue("X's turn" in history_string)
+	self.assertFalse("O's turn" in history_string)
 
     def test_that_current_player_var_alternates(self):
         input_one,input_two = self.create_fake_input_objects([1,2,3],[4,5,6])
