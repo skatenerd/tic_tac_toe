@@ -1,6 +1,6 @@
 import playerinput
 
-class Player(object):
+class HumanPlayer(object):
 
     PLAYERS_DICT = {'x':'o','o':'x'}
 

@@ -1,8 +1,10 @@
 import unittest
 from game import *
 from board import *
-from test_utils import FakePrinter, MockUserInput, MockPlayer, ScriptedPlayer
-from player import Player
+from ai import ImpossibleAI
+from easy_ai import EasyAI
+from test_utils import FakePrinter, MockUserInput, MockPlayer
+from player import HumanPlayer
 from playerinput import InputValidator
 
 class GameRunTests(unittest.TestCase):
@@ -160,7 +162,7 @@ class GameRoundTests(unittest.TestCase):
         self.assertEqual({2:"x"},game.gameboard.state())
    
     def test_that_board_is_shown_during_human_round_only(self):
-        computer = AI("o")
+        computer = ImpossibleAI("o")
         fake_human = MockPlayer("x",MockUserInput([1,2]))
         fake_printer = FakePrinter() 
         game = Game(computer,fake_human,fake_printer)
@@ -208,7 +210,7 @@ class GameMoveTests(unittest.TestCase):
 
     def test_that_move_works_with_easy_ai(self):
         computer = EasyAI("o")
-        game = Game(Player("x"),computer)
+        game = Game(HumanPlayer("x"),computer)
         game.__move__(computer.next_move(game.gameboard),computer)
         empty_board = {}
         self.assertTrue(game.gameboard.state() != empty_board)

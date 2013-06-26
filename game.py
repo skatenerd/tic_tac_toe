@@ -1,8 +1,5 @@
-from __future__ import print_function
-from player import Player
 from board import Board
-from ai import AI
-from easy_ai import EasyAI
+from ai import ImpossibleAI
 from playerinput import MoveValidator
 from printer import Printer
 
@@ -40,7 +37,7 @@ class Game(object):
     def __round__(self,player):
             if not self.__over__():
 	        self.display_method(self.current_player.token.capitalize() + "'s turn")
-		if not type(player) == AI:
+		if not type(player) == ImpossibleAI:
 		    move = self.__non_ai_move__(player)
                 else:
 		    move = player.next_move(self.gameboard)

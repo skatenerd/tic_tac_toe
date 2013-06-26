@@ -1,7 +1,7 @@
 import random
 import sys
 sys.path.append("../")
-from player import Player
+from player import HumanPlayer
 from board import Board
 
 class MockUserInput(object):
@@ -17,18 +17,7 @@ class MockUserInput(object):
     def __increment_times_called__(self):
         self.times_called += 1
 
-class ScriptedPlayer(Player):
-
-    def __init__(self,token,moves):
-        self.token = token
-        self.moves = moves
-        self.times_called = 0
-
-    def next_move(self,board):
-        self.times_called += 1
-        return self.moves.pop(0)
-
-class MockPlayer(Player):
+class MockPlayer(HumanPlayer):
 
     def __init__(self,token,fake_input):
         super(MockPlayer,self).__init__(token,fake_input)

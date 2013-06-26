@@ -1,7 +1,5 @@
 import unittest
 from ai_vs_ai import AiVsAiScenario
-from game import Game
-from ai import AI
 
 class AiVsAiScenarioInitTests(unittest.TestCase):
 

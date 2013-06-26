@@ -1,4 +1,4 @@
-from ai import AI
+from ai import ImpossibleAI
 from game import Game
 from scenario import Scenario
 
@@ -9,8 +9,8 @@ class AiVsAiScenario(object):
     order_flag = False
 
     def setup(self):
-        player_one = AI("x")
-	player_two = AI("o")
+        player_one = ImpossibleAI("x")
+	player_two = ImpossibleAI("o")
 	return Game(player_one,player_two)
 
     @staticmethod

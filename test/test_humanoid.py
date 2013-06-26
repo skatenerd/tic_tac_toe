@@ -1,5 +1,4 @@
 import unittest
-from ai import AI
 from humanoid import Humanoid
 from board import Board
 from test_utils import MockUserInput

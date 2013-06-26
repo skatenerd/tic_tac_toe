@@ -1,5 +1,6 @@
-from player import Player
+from player import HumanPlayer
 from game import Game
+from no_human_involvement import NoHumanInvolvementInterface
 
 class HumanVsHumanScenario(object):
 
@@ -7,10 +8,11 @@ class HumanVsHumanScenario(object):
     difficulty_flag = False
     order_flag = False
 
+    def __init__(self):
+	self.interface = NoHumanInvolvementInterface()
+
     def setup(self):
-        player_one = Player("x")
-	player_two = Player("o")
-	return Game(player_one,player_two)
+	return self.interface.setup(HumanPlayer)
 
     @staticmethod
     def flags():

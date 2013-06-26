@@ -1,71 +1,9 @@
-from player import Player 
+from minimax import Minimax
 
-class AI(Player):
+class ImpossibleAI(object):
 
-  PLAYERS_DICT = {'x':'o','o':'x'}
+    def __init__(self,token):
+	self.token = token
 
-  def __init__(self,token,input_object=None):
-      self.token = token
-      self.opponent_token = self.PLAYERS_DICT[self.token]
-      self.minimax_status = {"alpha":-1,"beta":1}
-      self.depth = 1
-      self.MAX_DEPTH = 2500 
-
-  def next_move(self,board):
-      move_list = self.__build_move_list__(board)
-      if move_list:
-          best_move = max(move_list)[-1]
-          return best_move
-
-  def __build_move_list__(self,board):
-      move_list = []
-      possible_moves = board.available_moves()
-      for move in possible_moves:
-          move_score = self.__best_score__(move,board,self.token)
-          move_list.append((move_score,move))
-      return move_list
-
-  def __best_score__(self, space, board, player):
-      try:
-          board.make_move(space,player)
-	  if board.game_over() or self.depth == self.MAX_DEPTH: 
-              return ((self.__cost_function__(board.winner()) * self.MAX_DEPTH) / self.depth)
-          return self.__alpha_beta_prune__(board, player)
-      finally:
-          board.erase_move(space)
-
-  def __alpha_beta_prune__(self, board, player):
-      next_player = self.PLAYERS_DICT[player]
-      if self.__comp_turn__(player):
-          return self.__return_beta__(board,next_player)
-      else:
-          return self.__return_alpha__(board,next_player)
-
-  def __return_beta__(self,board,next_player):
-      beta = self.minimax_status["beta"] 
-      alpha = self.minimax_status["alpha"]
-      self.depth += 1
-      possible_moves = board.available_moves()
-      for move in possible_moves:
-          beta = min(beta, self.__best_score__(move,board,next_player))
-          if beta <= alpha:
-              break
-      return beta
-
-  def __return_alpha__(self,board,next_player):
-      alpha = self.minimax_status["alpha"]
-      beta = self.minimax_status["beta"]
-      self.depth += 1
-      possible_moves = board.available_moves()
-      for move in possible_moves:
-          alpha = max(alpha,self.__best_score__(move,board,next_player))
-          if beta <= alpha:
-              break
-      return alpha
-
-  def __cost_function__(self, winner):
-      cost_dict = {self.opponent_token:-1, self.token:1, None:0}
-      return cost_dict[winner]
-
-  def __comp_turn__(self, current_player):
-      return current_player == self.token
+    def next_move(self,board):
+	return Minimax(self.token,6).next_move(board)
