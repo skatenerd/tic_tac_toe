@@ -12,11 +12,12 @@ class HumanVsHumanScenario(object):
 	self.interface = NoHumanInvolvementInterface()
 
     def setup(self):
-	return self.interface.setup(HumanPlayer)
+	player_one = HumanPlayer("x")
+	player_two = HumanPlayer("o")
+	return Game(player_one,player_two)
 
     @staticmethod
     def flags():
-        flag_dict = {"difficulty_flag":HumanVsHumanScenario.difficulty_flag,
-		     "token_flag":HumanVsHumanScenario.token_flag,
-		     "order_flag":HumanVsHumanScenario.order_flag}
-	return flag_dict
+        return {"difficulty_flag":False,
+		"token_flag":False,
+		"order_flag":False}

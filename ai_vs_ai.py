@@ -1,6 +1,5 @@
 from ai import ImpossibleAI
 from game import Game
-from scenario import Scenario
 
 class AiVsAiScenario(object):
 
