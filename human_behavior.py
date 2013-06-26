@@ -3,7 +3,7 @@ from ai import ImpossibleAI
 from game import Game
 from player import HumanPlayer
 
-class HumanBehaviorInterface(object):
+class HumanPromptInterface(object):
 
     def __init__(self,token_one,token_two,
 		 human_first=True,difficulty="impossible"):

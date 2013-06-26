@@ -1,6 +1,6 @@
 from player import HumanPlayer
 from game import Game
-from no_human_involvement import NoHumanInvolvementInterface
+from no_prompt_interface import NoPromptInterface	
 
 class HumanVsHumanScenario(object):
 
@@ -9,7 +9,7 @@ class HumanVsHumanScenario(object):
     order_flag = False
 
     def __init__(self):
-	self.interface = NoHumanInvolvementInterface()
+	self.interface = NoPromptInterface()
 
     def setup(self):
 	player_one = HumanPlayer("x")

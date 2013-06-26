@@ -1,10 +1,20 @@
 import unittest
-from ai_vs_ai import AiVsAiScenario
+from no_prompt_interface import NoPromptInterface
+from game import Game
+from player import HumanPlayer
 
-class AiVsAiScenarioInitTests(unittest.TestCase):
+class NoPromptInterfaceTests(unittest.TestCase):
 
     def test_flags_are_false(self):
-	scenario = AiVsAiScenario()
-	flag_dict = scenario.flags()
+	interface = NoPromptInterface
+	flag_dict = interface.flags()
 	for flag in flag_dict:
 	    self.assertFalse(flag_dict[flag])
+
+    def test_setup_should_return_game(self):
+	player = HumanPlayer
+	interface = NoPromptInterface()
+	returned_object = interface.setup(player)
+	self.assertTrue(isinstance(returned_object,Game))
+	
+    
