@@ -1,5 +1,5 @@
 from player import HumanPlayer
-from human_behavior import HumanPromptInterface
+from human_prompt_interface import HumanPromptInterface
 
 class HumanVsAiScenario(object):
 

@@ -1,5 +1,5 @@
 import unittest
-from human_behavior import HumanPromptInterface
+from human_prompt_interface import HumanPromptInterface
 from game import Game
 from ai import ImpossibleAI
 from easy_ai import EasyAI

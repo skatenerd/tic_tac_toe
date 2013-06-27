@@ -3,7 +3,7 @@ from humanoid import Humanoid
 from human_vs_ai import HumanVsAiScenario
 from easy_ai import EasyAI
 from ai import ImpossibleAI
-from human_behavior import HumanPromptInterface
+from human_prompt_interface import HumanPromptInterface
 
 class HumanoidVsAiScenario(object):
 
