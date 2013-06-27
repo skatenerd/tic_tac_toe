@@ -18,7 +18,7 @@ class AiDifficultyTests(unittest.TestCase):
 	computer_two = ImpossibleAI("o")
 	game = Game(computer,computer_two)
 	game.run()
-	self.assertTrue(game.gameboard.winner() != "x")
+	self.assertTrue(game.board.winner() != "x")
 
     def test_easy_ai_has_token(self):
         computer = EasyAI("o")

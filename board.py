@@ -30,7 +30,7 @@ class Board(object):
         if space in self.available_moves():
             self.board_state[space] = token
 
-    def game_over(self):
+    def over(self):
         return bool(self.winner()) or self.is_full()
 
     def winner(self):

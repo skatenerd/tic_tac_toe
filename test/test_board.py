@@ -49,19 +49,19 @@ class BoardGameOverTests(unittest.TestCase):
 
     def test_if_game_over_returns_false_at_game_beginning(self):
         game_board = Board()
-        self.assertEqual(False, game_board.game_over())
+        self.assertEqual(False, game_board.over())
 
     def test_if_game_over_returns_true_when_board_is_full(self):
         game_board = Board()
         for i in range(1,10):
             game_board.make_move(i,'x')
-        self.assertEqual(True,game_board.game_over())
+        self.assertEqual(True,game_board.over())
 
     def test_if_game_over_returns_true_when_there_is_winner(self):
         game_board = Board()
         for i in range(1,4):
             game_board.make_move(i,'x')
-        self.assertEqual(True,game_board.game_over())
+        self.assertEqual(True,game_board.over())
 
     def test_if_game_over_returns_false_with_empty_square(self):
         game_board = Board()
@@ -72,7 +72,7 @@ class BoardGameOverTests(unittest.TestCase):
             game_board.make_move(i,'o')
         game_board.make_move(7,'o')
         game_board.make_move(8,'x')
-        self.assertEqual(False,game_board.game_over())
+        self.assertEqual(False,game_board.over())
 
     def test_if_game_over_returns_false_with_three_empty_squares(self):
         game_board = Board()
@@ -82,7 +82,7 @@ class BoardGameOverTests(unittest.TestCase):
         game_board.make_move(4,'o')
         game_board.make_move(5,'x')
         game_board.make_move(6,'o')
-        self.assertEqual(False,game_board.game_over())
+        self.assertEqual(False,game_board.over())
 
 class BoardWinnerTests(unittest.TestCase):
 

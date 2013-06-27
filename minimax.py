@@ -28,7 +28,7 @@ class Minimax(object):
   def __best_score__(self, space, board, player, depth=1):
       try:
           board.make_move(space,player)
-	  if board.game_over() or depth == self.MAX_DEPTH: 
+	  if board.over() or depth == self.MAX_DEPTH: 
               return ((self.__cost_function__(board.winner()) * self.MAX_DEPTH) / depth)
           return self.__alpha_beta_prune__(board, player,depth)
       finally:
