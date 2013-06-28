@@ -1,7 +1,7 @@
-import sys
-sys.path.append("../")
-from player import *
 import unittest
+from player import *
+from test_utils import FakePrinter,MockUserInput
+from board import Board
 
 class PlayerInitTests(unittest.TestCase):
 
@@ -15,3 +15,18 @@ class PlayerInitTests(unittest.TestCase):
         player_two = HumanPlayer('x')
         self.assertEqual('o',player_two.opponent_token)
 
+    def test_player_prompts(self):
+	mock = MockUserInput([1])
+	fake_printer = FakePrinter()
+	player = HumanPlayer("x",mock,fake_printer)
+	player.next_move(Board())
+	history_string = "".join(fake_printer.history)
+	NOT_FOUND = -1
+	status = history_string.find("Available moves are " + str(Board().available_moves())) 
+	self.assertNotEqual(NOT_FOUND,status)
+
+	status = history_string.find("Please select a move: ")
+	self.assertNotEqual(NOT_FOUND,status)
+
+        status = history_string.find(player.token.capitalize() + "'s turn")
+	self.assertNotEqual(NOT_FOUND,status)

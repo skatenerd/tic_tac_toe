@@ -3,8 +3,9 @@ from easy_ai import EasyAI
 from ai import ImpossibleAI
 from game import Game
 from board import Board
+from test_utils import FakePrinter
 
-class AiDifficultyTests(unittest.TestCase):
+class EasyAiTests(unittest.TestCase):
 
     def test_that_it_doesnt_block(self):
 	board = Board()
@@ -23,3 +24,19 @@ class AiDifficultyTests(unittest.TestCase):
     def test_easy_ai_has_token(self):
         computer = EasyAI("o")
         self.assertEqual("o",computer.token)
+
+    def test_for_prompts(self):
+	fake_printer = FakePrinter()
+	computer = EasyAI("x",fake_printer)
+	board = Board()
+	board.board_state = {1:"x",2:"o",3:"x",
+			     4:"o",5:"o",6:"x",
+			           8:"x", 9:"o"}
+	computer.next_move(board)
+        NOT_FOUND = -1
+	history = "".join(fake_printer.history)
+	status = history.find("X moves to 7")
+	self.assertNotEqual(NOT_FOUND,status)
+
+        status = history.find(computer.token.capitalize() + "'s turn")
+	self.assertNotEqual(NOT_FOUND,status)

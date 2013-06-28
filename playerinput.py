@@ -16,7 +16,8 @@ class MoveValidator(object):
 
 class InputValidator(object):
 
-    def return_valid_response(self,input_source,valid_responses):
+    @staticmethod
+    def return_valid_response(input_source,valid_responses):
         data_type = type(valid_responses[0])
         user_input = " "
         while user_input not in valid_responses:

@@ -87,18 +87,6 @@ class GameRunTests(unittest.TestCase):
         self.assertEqual(None,game.board.winner())
         self.assertTrue("It's a tie." in fake_printer.history)
 
-    def test_for_move_announcements(self):
-	fake_player_one = MockPlayer("x",MockUserInput([1]))
-	fake_player_two = MockPlayer("o",MockUserInput([2]))
-	fake_printer = FakePrinter()
-	game = Game(fake_player_one,fake_player_two,display_object=fake_printer)
-	game.board.board_state = {2:"x",3:"x"}
-	game.run()
-	history_string = " ".join(fake_printer.history)
-	self.assertTrue("x moves to 1" in history_string)
-	self.assertTrue("X's turn" in history_string)
-	self.assertFalse("O's turn" in history_string)
-
     def test_that_current_player_var_alternates(self):
         input_one,input_two = self.create_fake_input_objects([1,2,3],[4,5,6])
 	player_one,player_two = self.create_fake_players(input_one,input_two)
@@ -120,18 +108,6 @@ class GameRoundTests(unittest.TestCase):
 	game.run()
         times_game_prompts_player_one = fake_player_one.input_object.times_called
         self.assertEqual(0,times_game_prompts_player_one)
-
-    def test_that_round_shows_available_moves(self):
-        fake_player_one = MockPlayer("x", MockUserInput([1,2,3]))
-        fake_player_two = MockPlayer("o",MockUserInput([4,5]))
-        fake_printer = FakePrinter()
-        game = Game(fake_player_one,fake_player_two,display_object=fake_printer)
-	game.run()
-        expected_string = ("Available moves are ")
-        NOT_FOUND = -1
-        history_string = " ".join(fake_printer.history) 
-        status = history_string.find(expected_string) 
-        self.assertTrue(status != NOT_FOUND)
  
     def test_that_round_set_calls_each_player(self):
         fake_player_one_input = MockUserInput([1])
@@ -145,15 +121,6 @@ class GameRoundTests(unittest.TestCase):
         self.assertEqual(1,times_game_prompts_player_one)
         self.assertEqual(1,times_game_prompts_player_two)
 
-    def test_that_round_set_prompts_player(self):
-        fake_player_one = MockPlayer("x",MockUserInput([1]))
-        fake_player_two = MockPlayer("o",MockUserInput([2]))
-        fake_printer = FakePrinter()
-        prompt = "Please select a move: "
-        game = Game(fake_player_one,fake_player_two,fake_printer)
-        game.__round_set__()
-        self.assertTrue(prompt in fake_printer.history)
- 
     def test_that_sample_board_shown(self):
         fake_printer = FakePrinter()
         fake_player_one = MockPlayer("x",MockUserInput([1,2,3]))

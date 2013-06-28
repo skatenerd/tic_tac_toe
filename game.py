@@ -2,6 +2,9 @@ from board import Board
 from ai import ImpossibleAI
 from playerinput import MoveValidator
 from printer import Printer
+from easy_ai import EasyAI
+from player import HumanPlayer
+from humanoid import Humanoid
 
 class Game(object):
 
@@ -36,13 +39,11 @@ class Game(object):
 
     def __round__(self,player):
             if not self.__over__():
-	        self.display_method(player.token.capitalize() + "'s turn")
-		if not type(player) == ImpossibleAI:
+		if type(player) == HumanPlayer or type(player) == Humanoid:
 		    move = self.__non_ai_move__(player)
                 else:
 		    move = player.next_move(self.board)
                 self.__move__(move,player)
-		self.display_method(self.current_player.token + " moves to " + str(move))
 		self.current_player = {self.player_one:self.player_two,
 				       self.player_two:self.player_one}[self.current_player]
 		self.__print_board_if_game_not_over__()
@@ -52,9 +53,7 @@ class Game(object):
             self.display_method(self.board)
 
     def __non_ai_move__(self,current_player):
-        self.display_method("Please select a move: ") 
         self.__print_board_if_game_not_over__()
-	self.display_method("Available moves are " + str(self.board.available_moves()))
         validator = MoveValidator()
         move = validator.validate(self.board,current_player,self.board.available_moves())
         return move	
