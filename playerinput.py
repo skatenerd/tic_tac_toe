@@ -3,17 +3,6 @@ class PlayerInput(object):
     def call(self):
         return raw_input()
 
-class MoveValidator(object):
-
-    def validate(self,board,player,valid_responses,data_type=int):
-        response = None
-	while response not in valid_responses:
-	    try:
-	        response = data_type(player.next_move(board))
-	    except:
-		continue
-	return response
-
 class InputValidator(object):
 
     @staticmethod
