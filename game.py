@@ -39,10 +39,7 @@ class Game(object):
 
     def __round__(self,player):
             if not self.__over__():
-		if type(player) == HumanPlayer or type(player) == Humanoid:
-		    move = self.__non_ai_move__(player)
-                else:
-		    move = player.next_move(self.board)
+		move = player.next_move(self.board)
                 self.__move__(move,player)
 		self.current_player = {self.player_one:self.player_two,
 				       self.player_two:self.player_one}[self.current_player]
