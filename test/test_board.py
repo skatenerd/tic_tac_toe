@@ -1,9 +1,5 @@
 import unittest
-import sys
-sys.path.append("../")
 from board import *
-from ai import *
-from player import *
 
 class BoardInitTests(unittest.TestCase):
 
@@ -13,76 +9,59 @@ class BoardInitTests(unittest.TestCase):
 class Board__Str__Tests(unittest.TestCase):
 
     def test_if_game_returns_no_pieces(self):
-        game_board = Board()
+        board = Board()
         NOT_FOUND = -1
-        self.assertEqual(NOT_FOUND,game_board.__str__().find('x'))
-        self.assertEqual(NOT_FOUND,game_board.__str__().find('o'))
-        for num in range(1,10):
-            self.assertEqual(-1,game_board.__str__().find(str(num)))
+        self.assertEqual(NOT_FOUND,board.__str__().find('x'))
+        self.assertEqual(NOT_FOUND,board.__str__().find('o'))
 
-    def test_if_game_board_returns_correct_layout(self):
-        game_board = Board()
-        game_board.make_move(1,'x')
-        self.assertEqual(1,game_board.__str__().count('x'))
+    def test_if_board_returns_correct_layout(self):
+        board = Board()
+        board.make_move(1,'x')
+        self.assertEqual(1,board.__str__().count('x'))
 
 class BoardStateTests(unittest.TestCase):
 
     def test_if_state_returns_empty_dict_with_no_moves(self):
-      board = Board()
-      self.assertEqual(dict(),board.state())
+        board = Board()
+        self.assertEqual(dict(),board.state())
 
     def test_if_state_returns_correct_mappings(self):
-      board = Board()
-      board.make_move(1,'x')
-      board.make_move(3,'o')
-      self.assertEqual({1:'x',3:'o'},board.state())
+        board = Board()
+        board.make_move(1,'x')
+        board.make_move(3,'o')
+        self.assertEqual({1:'x',3:'o'},board.state())
 
 class BoardMakeMoveTests(unittest.TestCase):
 
     def test_if_make_move_alters_board_state(self):
-        empty_board_state = Board()
-        sample_board = Board()
-        sample_board.make_move(1,'x')
-        self.assertNotEqual(empty_board_state, sample_board.board_state)
+	board = Board()
+	board.make_move(1,"x")
+	self.assertEqual({1:"x"},board.state())
 
 class BoardGameOverTests(unittest.TestCase):
 
     def test_if_game_over_returns_false_at_game_beginning(self):
-        game_board = Board()
-        self.assertEqual(False, game_board.over())
+        board = Board()
+        self.assertEqual(False, board.over())
 
     def test_if_game_over_returns_true_when_board_is_full(self):
-        game_board = Board()
-        for i in range(1,10):
-            game_board.make_move(i,'x')
-        self.assertEqual(True,game_board.over())
+        board = Board()
+	board.board_state = {1:"x",2:"x",3:"o",
+			     4:"o",5:"x",6:"x",
+			     7:"x",8:"o",9:"o"}
+        self.assertEqual(True,board.over())
 
     def test_if_game_over_returns_true_when_there_is_winner(self):
-        game_board = Board()
-        for i in range(1,4):
-            game_board.make_move(i,'x')
-        self.assertEqual(True,game_board.over())
+        board = Board()
+	board.board_state = {1:"x",2:"x",3:"x"}
+        self.assertEqual(True,board.over())
 
     def test_if_game_over_returns_false_with_empty_square(self):
-        game_board = Board()
-        for i in range(1,6):
-          if i % 2 != 0:
-            game_board.make_move(i,'x')
-          else:
-            game_board.make_move(i,'o')
-        game_board.make_move(7,'o')
-        game_board.make_move(8,'x')
-        self.assertEqual(False,game_board.over())
-
-    def test_if_game_over_returns_false_with_three_empty_squares(self):
-        game_board = Board()
-        game_board.make_move(1,'x')
-        game_board.make_move(2,'o')
-        game_board.make_move(3,'x')
-        game_board.make_move(4,'o')
-        game_board.make_move(5,'x')
-        game_board.make_move(6,'o')
-        self.assertEqual(False,game_board.over())
+        board = Board()
+	board.board_state = {1:"x",2:"o",3:"x",
+			     4:"o",5:"x",7:"o",
+			     8:"x"}
+        self.assertEqual(False,board.over())
 
 class BoardWinnerTests(unittest.TestCase):
 
@@ -90,52 +69,37 @@ class BoardWinnerTests(unittest.TestCase):
         self.assertEqual(None,Board().winner())
 
     def test_if_winner_returns_none_with_no_win(self):
-        game_board = Board()
-        game_board.make_move(1,'x')
-        self.assertEqual(None,game_board.winner())
+        board = Board()
+        board.make_move(1,'x')
+        self.assertEqual(None,board.winner())
 
     def test_if_winner_returns_token_with_win(self):
-        game_board = Board()
-        game_board.make_move(1,'x')
-        game_board.make_move(2,'x')
-        game_board.make_move(3,'x')
-        expected_winning_token = 'x'
-        actual_winning_token = game_board.winner()
-        self.assertEqual(expected_winning_token, actual_winning_token)
+        board = Board()
+	board.board_state = {1:"x",2:"x",3:"x"}
+	self.assertEqual("x",board.winner())
 
     def test_winner_with_other_combo(self):
-        game_board = Board()
-        game_board.make_move(7,'o')
-        game_board.make_move(8, 'o')
-        game_board.make_move(9, 'o')
-        expected_winning_token = 'o'
-        actual_winning_token = game_board.winner()
-        self.assertEqual(expected_winning_token, actual_winning_token)
+        board = Board()
+	board.board_state = {1:"o",2:"o",3:"o"}
+	self.assertEqual("o",board.winner())
 
     def test_if_winner_returns_none_with_full_board_no_win(self):
-        game_board = Board()
-        game_board.make_move(1,'x')
-        game_board.make_move(5,'o')
-        game_board.make_move(3,'x')
-        game_board.make_move(2,'o')
-        game_board.make_move(8,'x')
-        game_board.make_move(4,'o')
-        game_board.make_move(6,'x')
-        game_board.make_move(9,'o')
-        game_board.make_move(7,'x')
-        self.assertEqual(None,game_board.winner())
+        board = Board()
+	board.board_state = {1:"x",2:"o",3:"x",
+			     4:"o",5:"o",6:"x",
+			     7:"x",8:"x",9:"o"}
+        self.assertEqual(None,board.winner())
 
-    def test_that_winner_always_returns_str_or_none(self):
-        game_board = Board()
-        for i in range(1,4):
-            game_board.make_move(i,'x')
-        self.assertEqual(str,type(game_board.winner()))
-        for i in range(1,4):
-            game_board.make_move(i,'o')
-        self.assertEqual(str,type(game_board.winner()))
-        for i in range(1,4):
-            game_board.erase_move(i)
-        self.assertEqual(None,game_board.winner())
+    def test_that_winner_always_returns_token_or_none(self):
+        board = Board()
+	board.board_state = {1:"x",2:"x",3:"x"}
+        self.assertEqual("x",board.winner())
+
+        board.board_state = {1:"o",2:"o",3:"o"}
+	self.assertEqual("o",board.winner())
+
+        board.board_state = {}
+        self.assertEqual(None,board.winner())
 
 
 class BoardIsFullTests(unittest.TestCase):
@@ -144,15 +108,16 @@ class BoardIsFullTests(unittest.TestCase):
         self.assertEqual(False, Board().is_full())
 
     def test_is_full_on_non_empty_board(self):
-        game_board = Board()
-        game_board.make_move(1,'x')
-        self.assertEqual(False, game_board.is_full())
+        board = Board()
+        board.make_move(1,'x')
+        self.assertEqual(False, board.is_full())
 
-    def test_is_full_on_full_game_board(self):
-        game_board = Board()
-        for i in range(1,10):
-            game_board.make_move(i,'x')
-        self.assertEqual(True, game_board.is_full())
+    def test_is_full_on_full_board(self):
+        board = Board()
+	board.board_state = {1:"x",2:"o",3:"x",
+			     4:"x",5:"o",6:"x",
+			     7:"o",8:"x",9:"o"}
+        self.assertEqual(True, board.is_full())
 
 class BoardAvailableMovesTests(unittest.TestCase):
 
@@ -162,23 +127,24 @@ class BoardAvailableMovesTests(unittest.TestCase):
         self.assertEqual(expected_available_moves, actual_available_moves)
 
     def test_available_moves_when_one_space_occupied(self):
-        game_board = Board()
-        game_board.make_move(1,'x')
-        actual_available_moves = game_board.available_moves()
+        board = Board()
+        board.make_move(1,'x')
+        actual_available_moves = board.available_moves()
         expected_available_moves = range(2,10)
         self.assertEqual(expected_available_moves, actual_available_moves)
 
     def test_available_moves_when_all_spaces_occupied(self):
-        game_board = Board()
-        for space in range(1,10):
-            game_board.make_move(space,'x')
-        available_moves = game_board.available_moves()
+        board = Board()
+	board.board_state = {1:"x",2:"o",3:"x",
+			     4:"o",5:"x",6:"o",
+			     7:"x",8:"o",9:"x"}
+        available_moves = board.available_moves()
         self.assertEqual([], available_moves)
 
 class BoardEraseMoveTests(unittest.TestCase):
 
     def test_if_reset_erases_move(self):
-        game_board = Board()
-        game_board.make_move(1,'x')
-        game_board.erase_move(1)
-        self.assertEqual({},game_board.board_state)
+        board = Board()
+        board.make_move(1,'x')
+        board.erase_move(1)
+        self.assertEqual({},board.board_state)

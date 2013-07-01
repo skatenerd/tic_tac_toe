@@ -5,7 +5,7 @@ from test_utils import *
 class UserInterfaceGameSetupTests(unittest.TestCase):
 
     def return_prompts(self):
-        prompt_one = ("Would like to play against an easy or impossible ai: ") 
+        prompt_one = ("Would you like to play against an easy or impossible ai: ") 
         prompt_two = ( "(1) Human vs AI\n" +
                        "(2) Human vs Human\n" +
                        "(3) AI vs AI\n" +

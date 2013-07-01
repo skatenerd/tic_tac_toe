@@ -1,4 +1,5 @@
 from game import Game
+from collections import OrderedDict
 
 class NoPromptInterface(object):
 
@@ -12,3 +13,10 @@ class NoPromptInterface(object):
 		        "order_flag":False}
 	prompt_flags.update(more_flags)
 	return prompt_flags
+
+    @staticmethod
+    def prompts(**more_prompts):
+	prompt_hash = OrderedDict()
+	for prompt in more_prompts:
+            prompt_hash.update(prompt)
+	return prompt_hash

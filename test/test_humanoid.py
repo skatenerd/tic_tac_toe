@@ -42,3 +42,27 @@ class HumanoidNextMoveTests(unittest.TestCase):
         
 	status = history.find(humanoid.token.capitalize() + " moves to 1")
 	self.assertNotEqual(NOT_FOUND,status)
+
+	status = history.find("Available moves are " + str(Board().available_moves()))
+	self.assertNotEqual(NOT_FOUND,status)
+
+	status = history.find("Please select a move: ")
+	self.assertNotEqual(NOT_FOUND,status)
+
+    def test_that_input_prompts_arent_shown_to_humanoid_ai(self):
+	fake_printer = FakePrinter()
+	humanoid = Humanoid("x",fake_printer)
+        humanoid.times_next_move_called = 3
+	humanoid.next_move(Board())
+	NOT_FOUND = -1
+	status = self.build_and_search_history_string(fake_printer,"Available moves are")
+	self.assertTrue(status == NOT_FOUND)
+
+	status = self.build_and_search_history_string(fake_printer,"Please select a move: ")
+	self.assertTrue(status == NOT_FOUND)
+
+    def build_and_search_history_string(self,printer,search_string):
+        history_string = "".join(printer.history)
+	status = history_string.find(search_string)
+	return status
+

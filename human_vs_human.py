@@ -21,3 +21,6 @@ class HumanVsHumanScenario(object):
         return {"difficulty_flag":False,
 		"token_flag":False,
 		"order_flag":False}
+    @staticmethod
+    def prompts():
+	return NoPromptInterface.prompts()

@@ -9,25 +9,6 @@ from playerinput import InputValidator
 
 class GameRunTests(unittest.TestCase):
 
-    def assertInputObjectsCalled(self,input_obj_one,input_obj_two):
-	self.assertTrue(input_obj_one.times_called >= 1 and
-			input_obj_two.times_called >= 1)
-
-    def assertInputObjectsNotCalled(self,input_obj_one,input_obj_two):
-	self.assertTrue(input_obj_one.times_called == 0 and
-			input_obj_two.times_called == 0)
-
-    def create_fake_players(self,*input_objs):
-	input_object_one,input_object_two = input_objs
-	player_one = MockPlayer("x",input_object_one)
-	player_two = MockPlayer("o",input_object_two)
-	return player_one, player_two
-    
-    def create_fake_input_objects(self,input_list_one,input_list_two):
-	input_one = MockUserInput(input_list_one)
-	input_two = MockUserInput(input_list_two)
-	return input_one, input_two
-
     def test_that_players_move(self):
 	player_one_input,player_two_input = self.create_fake_input_objects([1,2,3],[4,5,6])
 	fake_player_one,fake_player_two = self.create_fake_players(player_one_input,player_two_input)
@@ -95,6 +76,25 @@ class GameRunTests(unittest.TestCase):
 	self.assertEqual("x",game.current_player.token)
 	game.run()
 	self.assertEqual("o",game.current_player.token)
+
+    def assertInputObjectsCalled(self,input_obj_one,input_obj_two):
+	self.assertTrue(input_obj_one.times_called >= 1 and
+			input_obj_two.times_called >= 1)
+
+    def assertInputObjectsNotCalled(self,input_obj_one,input_obj_two):
+	self.assertTrue(input_obj_one.times_called == 0 and
+			input_obj_two.times_called == 0)
+
+    def create_fake_players(self,*input_objs):
+	input_object_one,input_object_two = input_objs
+	player_one = MockPlayer("x",input_object_one)
+	player_two = MockPlayer("o",input_object_two)
+	return player_one, player_two
+    
+    def create_fake_input_objects(self,input_list_one,input_list_two):
+	input_one = MockUserInput(input_list_one)
+	input_two = MockUserInput(input_list_two)
+	return input_one, input_two
 
 class GameRoundTests(unittest.TestCase):
 

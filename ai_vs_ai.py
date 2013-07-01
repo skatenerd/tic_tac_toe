@@ -10,3 +10,7 @@ class AiVsAiScenario(object):
     @staticmethod
     def flags():
         return NoPromptInterface.flags()
+
+    @staticmethod
+    def prompts():
+	return NoPromptInterface.prompts()

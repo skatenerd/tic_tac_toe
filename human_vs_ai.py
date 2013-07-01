@@ -27,3 +27,7 @@ class HumanVsAiScenario(object):
     @staticmethod
     def flags():
         return HumanPromptInterface.prompt_flags()
+
+    @staticmethod
+    def prompts():
+	return HumanPromptInterface.prompts()
