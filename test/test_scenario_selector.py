@@ -25,6 +25,17 @@ class ScenarioSelectorTests(unittest.TestCase):
 	new_scenario = new_selector.return_scenario(self.user_data)
 	self.assertFlagsTrue(new_scenario.flags())
 
+    def test_second_player_works(self):
+	scenario_selector = ScenarioSelector(HumanVsAiScenario)
+	self.user_data["Would you like to move first or second (1,2): "] = 2
+	scenario = scenario_selector.return_scenario(self.user_data) 
+	self.assertEqual("x",scenario.token_two)
+
+    def test_first_player_works(self):
+	scenario_selector = ScenarioSelector(HumanVsAiScenario)
+	scenario = scenario_selector.return_scenario(self.user_data)
+	self.assertEqual("x",scenario.token_one)
+
     def test_scenario_flags(self):
 	scenario_selector = ScenarioSelector(HumanVsAiScenario)
 	flags = scenario_selector.scenario_flags()

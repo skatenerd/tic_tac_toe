@@ -14,7 +14,6 @@ class NoPromptInterfaceTests(unittest.TestCase):
     def test_setup_should_return_game(self):
 	player = HumanPlayer
 	interface = NoPromptInterface()
-	returned_object = interface.setup(player)
-	self.assertTrue(isinstance(returned_object,Game))
-	
+	game = interface.setup(player)
+        self.assertEqual("x",game.player_one.token)	
     

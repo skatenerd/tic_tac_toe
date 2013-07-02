@@ -12,10 +12,15 @@ class ScenarioSelector(object):
         
     def return_scenario(self,user_data):
 	if self.scenario_number != 3 and self.scenario_number != 2:
-	    player_one_token = user_data.get("Would you like to play as x or o: ")
-	    player_two_token = {"x":"o","o":"x"}[player_one_token]
-	    difficulty = user_data.get("Would you like to play against an easy or impossible ai: ")
 	    order = user_data.get("Would you like to move first or second (1,2): ")
+	    if order == 1:
+	        player_one_token = user_data.get("Would you like to play as x or o: ")
+	        player_two_token = {"x":"o","o":"x"}[player_one_token]
+	    else:
+		player_two_token = user_data.get("Would you like to play as x or o: ")
+		player_one_token = {"x":"o","o":"x"}[player_two_token]
+	    difficulty = user_data.get("Would you like to play against an easy or impossible ai: ")
+	    print order
 	    return self.scenario(player_one_token,player_two_token,order,difficulty)
         return self.scenario()
     
