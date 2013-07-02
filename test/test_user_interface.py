@@ -43,12 +43,12 @@ class UserInterfaceGameSetupTests(unittest.TestCase):
 class UserInterfaceShowFlaggedPromptsTests(unittest.TestCase):
 
     def test_that_only_flagged_prompts_are_shown(self):
-        mock = MockUserInput([3])
+        mock = MockUserInput([3,"easy"])
 	fake_printer = FakePrinter()
 	ui = UserInterface(mock,fake_printer)
 	ui.game_setup()
 	# Prompt for choosing scenario is only necessary prompt
-	prompts_necessary_for_scenario_three = 1
+	prompts_necessary_for_scenario_three = 2
 	printed_strings = len(fake_printer.history)
 	self.assertEqual(printed_strings,prompts_necessary_for_scenario_three)
 

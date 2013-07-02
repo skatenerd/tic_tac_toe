@@ -13,4 +13,6 @@ class AiVsAiScenario(object):
 
     @staticmethod
     def prompts():
-	return NoPromptInterface.prompts()
+	difficulty_prompt = {"What difficulty would you like the first ai to be (easy,impossible): ":
+			     ("easy","impossible")}
+	return NoPromptInterface.prompts(difficulty_prompt)

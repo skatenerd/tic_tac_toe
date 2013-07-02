@@ -15,7 +15,7 @@ class NoPromptInterface(object):
 	return prompt_flags
 
     @staticmethod
-    def prompts(**more_prompts):
+    def prompts(*more_prompts):
 	prompt_hash = OrderedDict()
 	for prompt in more_prompts:
             prompt_hash.update(prompt)

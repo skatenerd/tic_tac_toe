@@ -8,8 +8,8 @@ class ScenarioSelectorTests(unittest.TestCase):
 
     def setUp(self):
 	self.user_data = {"Would you like to play as x or o: ": "x",
-		     "Would you like to move first or second (1,2): ": 1,
-		     "Would you to play against an easy or impossible ai: ": "easy"}
+		          "Would you like to move first or second (1,2): ": 1,
+		          "Would you to play against an easy or impossible ai: ": "easy"}
 
     def test_that_scenario_mapping_works(self):
         scenario_selector = ScenarioSelector(HumanVsAiScenario)

@@ -20,7 +20,6 @@ class ScenarioSelector(object):
 		player_two_token = user_data.get("Would you like to play as x or o: ")
 		player_one_token = {"x":"o","o":"x"}[player_two_token]
 	    difficulty = user_data.get("Would you like to play against an easy or impossible ai: ")
-	    print order
 	    return self.scenario(player_one_token,player_two_token,order,difficulty)
         return self.scenario()
     
