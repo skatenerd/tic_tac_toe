@@ -10,21 +10,19 @@ from prompter import Prompter
 class UserInterface(object):
 
     def __init__(self,user_input,display_object=Printer()):
-        self.user_input = user_input
-	self.display_object = display_object
-        self.display_method = display_object.display
-	self.scenario_mapping = {1:HumanVsAiScenario,2:HumanVsHumanScenario, 3:AiVsAiScenario, 4:HumanoidVsAiScenario}
+      self.user_input = user_input
+      self.display_object = display_object
+      self.display_method = display_object.display
 
     def game_setup(self):
-	scenario_number = self.pick_scenario()
-	scenario_object = self.scenario_mapping[scenario_number]
-	scenario_selector = ScenarioSelector(scenario_object)
-	prompter = Prompter(self.display_object,self.user_input)
-	prompter.prompt_and_collect_input(scenario_selector.scenario_prompts())
-	user_responses = prompter.return_answer_hash()
-	scenario = scenario_selector.return_scenario(user_responses)
-        return scenario.setup() 
-    
+      scenario_number = self.pick_scenario()
+      scenario_selector = ScenarioSelector(scenario_number)
+      prompter = Prompter(self.display_object,self.user_input)
+      prompter.prompt_and_collect_input(scenario_selector.scenario_prompts())
+      user_responses = prompter.return_answer_hash()
+      scenario = scenario_selector.return_scenario(user_responses)
+      return scenario.setup()
+
     def pick_scenario(self):
         prompt = ("Please choose a scenario: \n" +
                   "(1) Human vs AI\n" +
@@ -33,7 +31,7 @@ class UserInterface(object):
                   "(4) Humanoid vs AI")
         scenario = self.__prompt_loop__(prompt,(1,2,3,4))
         return scenario
- 
+
     def __prompt_loop__(self,prompt,valid_responses):
         self.display_method(prompt)
         validator = InputValidator()
