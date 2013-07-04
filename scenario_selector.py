@@ -17,6 +17,8 @@ class ScenarioSelector(object):
     self.scenario = ScenarioSelector.scenario_list[scenario_number]
 
   def return_scenario(self,user_data):
+    if self.scenario == HumanVsAiScenario:
+      return self.scenario.game(user_data)
     if self.scenario != AiVsAiScenario and self.scenario != HumanVsHumanScenario:
       order = user_data.get("Would you like to move first or second (1,2): ")
       player_one_token, player_two_token = self.__assign_tokens__(user_data)

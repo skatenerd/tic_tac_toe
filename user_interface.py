@@ -1,3 +1,4 @@
+from game import Game
 from playerinput import InputValidator
 from printer import Printer
 from scenario_selector import ScenarioSelector
@@ -21,7 +22,10 @@ class UserInterface(object):
       prompter.prompt_and_collect_input(scenario_selector.scenario_prompts())
       user_responses = prompter.return_answer_hash()
       scenario = scenario_selector.return_scenario(user_responses)
-      return scenario.setup()
+      if type(scenario) == Game:
+        return scenario
+      else:
+        return scenario.setup()
 
     def pick_scenario(self):
       prompt = self.build_scenario_prompt()
