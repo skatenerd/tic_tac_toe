@@ -5,7 +5,7 @@ from test_utils import *
 class UserInterfaceGameSetupTests(unittest.TestCase):
 
     def return_prompts(self):
-        prompt_one = ("Would you like to play against an easy or impossible ai: ") 
+        prompt_one = ("Would you like to play against an easy or impossible ai: ")
         prompt_two = ( "(1) Human vs AI\n" +
                        "(2) Human vs Human\n" +
                        "(3) AI vs AI\n" +
@@ -25,14 +25,14 @@ class UserInterfaceGameSetupTests(unittest.TestCase):
 	self.assert_prompts_present(scenario,*prompts)
 
     def assert_prompts_present(self,scenario_number,*prompts):
-	dummy_input = [scenario_number,1,"x","easy"]
-	mock = MockUserInput(dummy_input)
-        fake_printer = FakePrinter()
-	ui = UserInterface(mock,fake_printer)
-	ui.game_setup()
-	history_string = " ".join(fake_printer.history)
-	for prompt in prompts:
-	    self.assertTrue(prompt in history_string)
+      dummy_input = [scenario_number,1,"x","easy"]
+      mock = MockUserInput(dummy_input)
+      fake_printer = FakePrinter()
+      ui = UserInterface(mock,fake_printer)
+      ui.game_setup()
+      history_string = " ".join(fake_printer.history)
+      for prompt in prompts:
+        self.assertTrue(prompt in history_string)
 
     def call_game_setup_with_input_list(self,input_list):
 	fake_printer = FakePrinter()
@@ -60,4 +60,4 @@ class UserInterfaceShowFlaggedPromptsTests(unittest.TestCase):
 	printed_strings = len(fake_printer.history)
 	self.assertEqual(printed_strings,prompts_necessary_for_scenario_two)
 
-        
+

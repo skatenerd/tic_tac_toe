@@ -3,6 +3,9 @@ from game import Game
 from no_prompt_interface import NoPromptInterface
 
 class AiVsAiScenario(object):
+    @staticmethod
+    def name():
+      return "AI vs AI"
 
     def setup(self):
         return NoPromptInterface().setup(ImpossibleAI)

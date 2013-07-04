@@ -5,6 +5,9 @@ from ai import ImpossibleAI
 from human_prompt_interface import HumanPromptInterface
 
 class HumanoidVsAiScenario(object):
+    @staticmethod
+    def name():
+      return "Humanoid vs AI"
 
     def __init__(self,player_one_token,player_two_token,
 		     order=1,difficulty="impossible"):

@@ -24,13 +24,18 @@ class UserInterface(object):
       return scenario.setup()
 
     def pick_scenario(self):
-        prompt = ("Please choose a scenario: \n" +
-                  "(1) Human vs AI\n" +
-                  "(2) Human vs Human\n" +
-                  "(3) AI vs AI\n"
-                  "(4) Humanoid vs AI")
-        scenario = self.__prompt_loop__(prompt,(1,2,3,4))
-        return scenario
+      prompt = self.build_scenario_prompt()
+      scenario = self.__prompt_loop__(prompt,(1,2,3,4))
+      return scenario
+
+    def build_scenario_prompt(self):
+      to_join = ["Please choose a scenario: \n"]
+      for (k,v) in ScenarioSelector.scenario_list.iteritems():
+        to_join.append(self.string_for_entry(k,v))
+      return "\n".join(to_join)
+
+    def string_for_entry(self, k, v):
+      return "(%s) %s" % (k, v.name())
 
     def __prompt_loop__(self,prompt,valid_responses):
         self.display_method(prompt)

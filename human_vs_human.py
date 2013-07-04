@@ -1,8 +1,11 @@
 from player import HumanPlayer
 from game import Game
-from no_prompt_interface import NoPromptInterface	
+from no_prompt_interface import NoPromptInterface
 
 class HumanVsHumanScenario(object):
+    @staticmethod
+    def name():
+      return "Human vs Human"
 
     token_flag = False
     difficulty_flag = False

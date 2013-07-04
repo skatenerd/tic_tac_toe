@@ -5,10 +5,13 @@ from ai import ImpossibleAI
 from game import Game
 
 class HumanVsAiScenario(object):
+    @staticmethod
+    def name():
+      return "Human vs AI"
 
     def __init__(self,player_one_token,player_two_token,
 		     order=1,difficulty="impossible"):
-         self.human_first = {1:True,2:False}[order] 
+         self.human_first = {1:True,2:False}[order]
 	 self.token_one = player_one_token
 	 self.token_two = player_two_token
 	 self.difficulty = difficulty
