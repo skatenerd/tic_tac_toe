@@ -11,24 +11,22 @@ from human_vs_ai import HumanVsAiScenario
 class SetupTests(unittest.TestCase):
 
     def test_human_setup_observes_user_data(self):
-      game = HumanVsAiScenario.game({
+      game = HumanVsAiScenario({
         HumanPromptInterface.order_prompt() : "2",
         HumanPromptInterface.token_prompt() : "x",
         HumanPromptInterface.difficulty_prompt() : "easy",
-      })
+      }).game()
       self.assertTrue(isinstance(game.player_two, HumanPlayer))
       self.assertTrue(isinstance(game.player_one, EasyAI))
       self.assertEqual(game.player_one.token, "o")
       self.assertEqual(game.player_two.token, "x")
 
     def test_humanoid_setup_observes_user_data(self):
-      game = HumanoidVsAiScenario.game({
+      game = HumanoidVsAiScenario({
         HumanPromptInterface.order_prompt() : "2",
         HumanPromptInterface.token_prompt() : "x",
         HumanPromptInterface.difficulty_prompt() : "easy",
-      })
-      print game.player_one
-      print game.player_two
+      }).game()
       self.assertTrue(isinstance(game.player_two, Humanoid))
       self.assertTrue(isinstance(game.player_one, EasyAI))
       self.assertEqual(game.player_one.token, "o")

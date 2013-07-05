@@ -7,30 +7,30 @@ from human_prompt_interface import HumanPromptInterface
 
 class HumanoidVsAiScenario(object):
 
-    ai_hash = {"easy":EasyAI,"impossible":ImpossibleAI}
 
     @staticmethod
     def name():
       return "Humanoid vs AI"
 
-    @staticmethod
-    def game(user_data):
-      order = user_data[HumanPromptInterface.order_prompt()]
-      token = user_data[HumanPromptInterface.token_prompt()]
-      difficulty = user_data[HumanPromptInterface.difficulty_prompt()]
-      if order == 1:
-        return Game(HumanoidVsAiScenario.human_player(token), HumanoidVsAiScenario.ai_player(difficulty, token))
-      else:
-        return Game(HumanoidVsAiScenario.ai_player(difficulty, token), HumanoidVsAiScenario.human_player(token))
+    def __init__(self, user_data):
+      self.ai_hash = {"easy":EasyAI,"impossible":ImpossibleAI}
+      self.user_data = user_data
 
-    @staticmethod
-    def ai_player(difficulty, token):
-      klass =  HumanoidVsAiScenario.ai_hash[difficulty]
+    def game(self):
+      order = self.user_data[HumanPromptInterface.order_prompt()]
+      token = self.user_data[HumanPromptInterface.token_prompt()]
+      difficulty = self.user_data[HumanPromptInterface.difficulty_prompt()]
+      if order == 1:
+        return Game(self.human_player(token), self.ai_player(difficulty, token))
+      else:
+        return Game(self.ai_player(difficulty, token), self.human_player(token))
+
+    def ai_player(self, difficulty, token):
+      klass =  self.ai_hash[difficulty]
       ai_token = Token(token).other().name
       return klass(ai_token)
 
-    @staticmethod
-    def human_player(token):
+    def human_player(self, token):
       return Humanoid(token)
 
     @staticmethod
