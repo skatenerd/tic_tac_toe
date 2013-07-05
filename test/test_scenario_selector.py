@@ -14,11 +14,11 @@ class ScenarioSelectorTests(unittest.TestCase):
     def test_second_player_works(self):
       scenario_selector = ScenarioSelector(1)
       self.user_data["Would you like to move first or second (1,2): "] = 2
-      game = scenario_selector.return_scenario(self.user_data)
+      game = scenario_selector.return_game(self.user_data)
       self.assertEqual("x", game.player_two.token)
 
     def test_first_player_works(self):
       scenario_selector = ScenarioSelector(1)
-      game = scenario_selector.return_scenario(self.user_data)
+      game = scenario_selector.return_game(self.user_data)
       self.assertEqual("x", game.player_one.token)
 

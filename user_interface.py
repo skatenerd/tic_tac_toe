@@ -21,11 +21,8 @@ class UserInterface(object):
       prompter = Prompter(self.display_object,self.user_input)
       prompter.prompt_and_collect_input(scenario_selector.scenario_prompts())
       user_responses = prompter.return_answer_hash()
-      scenario = scenario_selector.return_scenario(user_responses)
-      if type(scenario) == Game:
-        return scenario
-      else:
-        return scenario.setup()
+      game = scenario_selector.return_game(user_responses)
+      return game
 
     def pick_scenario(self):
       prompt = self.build_scenario_prompt()

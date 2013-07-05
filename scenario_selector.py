@@ -16,7 +16,7 @@ class ScenarioSelector(object):
   def __init__(self,scenario_number):
     self.scenario = ScenarioSelector.scenario_list[scenario_number]
 
-  def return_scenario(self,user_data):
+  def return_game(self,user_data):
     return self.scenario(user_data).game()
 
   def scenario_prompts(self):
