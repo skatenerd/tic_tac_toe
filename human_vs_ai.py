@@ -46,20 +46,6 @@ class HumanVsAiScenario(object):
     self.difficulty = difficulty
     self.ai_hash = HumanVsAiScenario.ai_hash
 
-  def setup(self):
-    ai_object = self.ai_hash[self.difficulty]
-    if self.human_first:
-        player_one = HumanPlayer(self.token_one)
-        player_two = ai_object(self.token_two)
-    else:
-        player_one = ai_object(self.token_one)
-        player_two = HumanPlayer(self.token_two)
-    return Game(player_one,player_two)
-
-  @staticmethod
-  def flags():
-    return HumanPromptInterface.prompt_flags()
-
   @staticmethod
   def prompts():
     return HumanPromptInterface.prompts()

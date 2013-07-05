@@ -22,14 +22,3 @@ class ScenarioSelectorTests(unittest.TestCase):
       game = scenario_selector.return_scenario(self.user_data)
       self.assertEqual("x", game.player_one.token)
 
-    def test_scenario_flags(self):
-      scenario_selector = ScenarioSelector(1)
-      flags = scenario_selector.scenario_flags()
-      self.assertTrue(flags["difficulty_flag"])
-      self.assertTrue(flags["order_flag"])
-      self.assertTrue(flags["token_flag"])
-
-    def assertFlagsFalse(self,flag_dictionary):
-      for flag in flag_dictionary.values():
-        self.assertFalse(flag)
-
