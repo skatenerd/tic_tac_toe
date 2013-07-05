@@ -19,20 +19,5 @@ class ScenarioSelector(object):
   def return_scenario(self,user_data):
     return self.scenario(user_data).game()
 
-  def __assign_tokens__(self,user_data):
-    if user_data.get("Would you like to move first or second (1,2): ") == 1:
-      player_one_token = user_data.get("Would you like to play as x or o: ")
-      player_two_token = self.__other_token__(player_one_token)
-    else:
-      player_two_token = user_data.get("Would you like to play as x or o: ")
-      player_one_token = self.__other_token__(player_two_token)
-    return [player_one_token,player_two_token]
-
-  def __other_token__(self,token):
-    return {"x":"o","o":"x"}[token]
-
-  def scenario_flags(self):
-    return self.scenario.flags()
-
   def scenario_prompts(self):
     return self.scenario.prompts()
