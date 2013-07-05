@@ -8,17 +8,20 @@ class AiVsAiScenario(object):
     def name():
       return "AI vs AI"
 
-    def setup(self):
-        return NoPromptInterface().setup(ImpossibleAI)
+    def __init__(self, user_data):
+      self.user_data = user_data
+
+    def game(self):
+      return Game(ImpossibleAI('x'), ImpossibleAI('o'))
 
     @staticmethod
-    def flags():
-        return NoPromptInterface.flags()
+    def first_ai_difficulty_prompt():
+      return "What difficulty would you like the first ai to be (easy,impossible): "
 
     @staticmethod
     def prompts():
       difficulty_prompt = {
-          "What difficulty would you like the first ai to be (easy,impossible): ":
+          AiVsAiScenario.first_ai_difficulty_prompt():
           ("easy","impossible")
       }
       return OrderedDict(difficulty_prompt)

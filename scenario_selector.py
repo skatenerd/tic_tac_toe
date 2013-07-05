@@ -17,11 +17,7 @@ class ScenarioSelector(object):
     self.scenario = ScenarioSelector.scenario_list[scenario_number]
 
   def return_scenario(self,user_data):
-    if self.scenario == HumanVsAiScenario or self.scenario == HumanoidVsAiScenario or self.scenario == HumanVsHumanScenario:
-      return self.scenario(user_data).game()
-    elif self.scenario == AiVsAiScenario and user_data.get("What difficulty would you like the first ai to be (easy,impossible): ") == "easy":
-      return EasyVsImpossibleAiScenario()
-    return self.scenario()
+    return self.scenario(user_data).game()
 
   def __assign_tokens__(self,user_data):
     if user_data.get("Would you like to move first or second (1,2): ") == 1:
