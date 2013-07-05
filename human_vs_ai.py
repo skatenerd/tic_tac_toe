@@ -7,6 +7,7 @@ from game import Game
 class Token(object):
   def __init__(self, name):
     self.name = name
+
   def other(self):
     other_name = {"x":"o","o":"x"}[self.name]
     return Token(other_name)

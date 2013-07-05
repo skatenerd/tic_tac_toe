@@ -17,13 +17,8 @@ class ScenarioSelector(object):
     self.scenario = ScenarioSelector.scenario_list[scenario_number]
 
   def return_scenario(self,user_data):
-    if self.scenario == HumanVsAiScenario:
+    if self.scenario == HumanVsAiScenario or self.scenario == HumanoidVsAiScenario:
       return self.scenario.game(user_data)
-    if self.scenario != AiVsAiScenario and self.scenario != HumanVsHumanScenario:
-      order = user_data.get("Would you like to move first or second (1,2): ")
-      player_one_token, player_two_token = self.__assign_tokens__(user_data)
-      difficulty = user_data.get("Would you like to play against an easy or impossible ai: ")
-      return self.scenario(player_one_token,player_two_token,order,difficulty)
     elif self.scenario == AiVsAiScenario and user_data.get("What difficulty would you like the first ai to be (easy,impossible): ") == "easy":
       return EasyVsImpossibleAiScenario()
     return self.scenario()

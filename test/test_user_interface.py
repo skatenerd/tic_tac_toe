@@ -1,5 +1,5 @@
 import unittest
-from user_interface import *
+from user_interface import UserInterface
 from test_utils import *
 
 class UserInterfaceGameSetupTests(unittest.TestCase):
