@@ -39,14 +39,6 @@ class HumanVsAiScenario(object):
   def human_player(token):
     return HumanPlayer(token)
 
-  def __init__(self,player_one_token,player_two_token,
-    order=1,difficulty="impossible"):
-    self.human_first = {1:True,2:False}[order]
-    self.token_one = player_one_token
-    self.token_two = player_two_token
-    self.difficulty = difficulty
-    self.ai_hash = HumanVsAiScenario.ai_hash
-
   @staticmethod
   def prompts():
     return HumanPromptInterface.prompts()
