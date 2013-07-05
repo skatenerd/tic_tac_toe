@@ -12,12 +12,7 @@ class Token(object):
     other_name = {"x":"o","o":"x"}[self.name]
     return Token(other_name)
 
-class HumanVsAiScenario(object):
-
-  @staticmethod
-  def name():
-    return "Human vs AI"
-
+class HumanInvolvementBaseScenario(object):
   def __init__(self, user_data):
     self.ai_hash = {"easy":EasyAI,"impossible":ImpossibleAI}
     self.user_data = user_data
@@ -35,6 +30,12 @@ class HumanVsAiScenario(object):
     klass =  self.ai_hash[difficulty]
     ai_token = Token(token).other().name
     return klass(ai_token)
+
+class HumanVsAiScenario(HumanInvolvementBaseScenario):
+
+  @staticmethod
+  def name():
+    return "Human vs AI"
 
   def human_player(self, token):
     return HumanPlayer(token)
