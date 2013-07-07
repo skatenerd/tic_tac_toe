@@ -3,6 +3,7 @@ from humanoid_vs_ai import HumanoidVsAiScenario
 from human_vs_ai import HumanVsAiScenario
 from human_vs_human import HumanVsHumanScenario
 from easy_vs_impossible_ai import EasyVsImpossibleAiScenario
+from playerinput import InputValidator
 
 class ScenarioSelector(object):
 
@@ -13,11 +14,10 @@ class ScenarioSelector(object):
       4: HumanoidVsAiScenario
   }
 
-  def __init__(self,scenario_number):
-    self.scenario = ScenarioSelector.scenario_list[scenario_number]
+  def __init__(self, user_input):
+    self.user_input = user_input
 
-  def return_game(self,user_data):
-    return self.scenario(user_data).game()
+  def scenario_class(self):
+    the_input = InputValidator.return_valid_response(self.user_input, ScenarioSelector.scenario_list.keys())
+    return ScenarioSelector.scenario_list[the_input]
 
-  def scenario_prompts(self):
-    return self.scenario.prompts()

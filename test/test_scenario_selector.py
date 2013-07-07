@@ -2,23 +2,20 @@ from ai_vs_ai import AiVsAiScenario
 from humanoid_vs_ai import HumanoidVsAiScenario
 from human_vs_ai import HumanVsAiScenario
 from scenario_selector import ScenarioSelector
+from test_utils import *
 import unittest
 
 class ScenarioSelectorTests(unittest.TestCase):
 
-    def setUp(self):
-      self.user_data = {"Would you like to play as x or o: ": "x",
-                        "Would you like to move first or second (1,2): ": 1,
-                        "Would you like to play against an easy or impossible ai: ": "easy"}
+  def test_returns_human_vs_ai_scenario(self):
+    mock_input = MockUserInput([1])
+    selector = ScenarioSelector(mock_input)
+    scenario_class = selector.scenario_class()
+    self.assertEqual(scenario_class, HumanVsAiScenario)
 
-    def test_second_player_works(self):
-      scenario_selector = ScenarioSelector(1)
-      self.user_data["Would you like to move first or second (1,2): "] = 2
-      game = scenario_selector.return_game(self.user_data)
-      self.assertEqual("x", game.player_two.token)
-
-    def test_first_player_works(self):
-      scenario_selector = ScenarioSelector(1)
-      game = scenario_selector.return_game(self.user_data)
-      self.assertEqual("x", game.player_one.token)
+  def test_requires_valid_input(self):
+    mock_input = MockUserInput([5, 4])
+    selector = ScenarioSelector(mock_input)
+    scenario_class = selector.scenario_class()
+    self.assertEqual(scenario_class, HumanoidVsAiScenario)
 
