@@ -24,22 +24,3 @@ class UserInterface(object):
       game = scenario_selector.return_game(user_responses)
       return game
 
-    def pick_scenario(self):
-      prompt = self.build_scenario_prompt()
-      scenario = self.__prompt_loop__(prompt,(1,2,3,4))
-      return scenario
-
-    def build_scenario_prompt(self):
-      to_join = ["Please choose a scenario: \n"]
-      for (k,v) in ScenarioSelector.scenario_list.iteritems():
-        to_join.append(self.string_for_entry(k,v))
-      return "\n".join(to_join)
-
-    def string_for_entry(self, k, v):
-      return "(%s) %s" % (k, v.name())
-
-    def __prompt_loop__(self,prompt,valid_responses):
-        self.display_method(prompt)
-        validator = InputValidator()
-        response = validator.return_valid_response(self.user_input, (valid_responses))
-        return response
